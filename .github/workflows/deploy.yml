@@ -25,6 +25,12 @@ jobs:
           node-version: '20.18.1'
           cache: 'yarn'
 
+      - name: Enable Corepack (Yarn 4+ support)
+        run: corepack enable
+
+      - name: Prepare Yarn version
+        run: corepack prepare yarn@4.7.0 --activate
+
       - name: Install xvfb (Virtual Display) # puppeteer needs that
         run: sudo apt-get install -y xvfb
 
