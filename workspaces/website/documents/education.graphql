@@ -1,0 +1,10 @@
+query Education {
+  educations {
+    id
+    period
+    degree
+    institution
+    achievements
+    specialization
+  }
+}

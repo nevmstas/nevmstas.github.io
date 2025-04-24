@@ -1,0 +1,14 @@
+query Profile {
+    profiles {
+    id
+    name
+    role
+    aboutMe
+    avatar {
+      url
+    }
+    contactEmail
+    linkedIn
+    github
+  }
+}

@@ -1,0 +1,8 @@
+query Skills {
+  skills {
+    frontend
+    backend
+    mobile
+    blockchain
+  }
+}

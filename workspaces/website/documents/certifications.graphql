@@ -1,0 +1,10 @@
+query Certifications {
+  certifications {
+    id
+    name
+    issuer
+    date
+    credentialId
+    link
+  }
+}

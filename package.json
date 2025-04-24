@@ -1,0 +1,7 @@
+{
+  "name": "nevmstas.github.io",
+  "packageManager": "yarn@4.7.0",
+  "workspaces": [
+    "workspaces/**"
+  ]
+}

@@ -1,0 +1,16 @@
+query Experiences {
+  experiences(orderBy: startDate_DESC) {
+    id
+    company
+    startDate
+    endDate
+    jobTitile
+    location
+    description
+    companyImage {
+      url
+      id
+    }
+    technologies
+  }
+}
