@@ -15,7 +15,7 @@ export const SectionHeader = ({
       <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 leading-tight">
         {headerText}
       </h2>
-      <p className="text-gray-400 max-w-xl mb-12">{description}</p>
+      <p className="text-gray-400 max-w-xl mb-12 hidden sm:block">{description}</p>
     </>
   );
 };

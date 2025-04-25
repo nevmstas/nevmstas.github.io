@@ -32,7 +32,7 @@ export async function HeroSection() {
           <GlitchText titles={titles} />
         </div>
 
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+        <p className="text-gray-400 max-w-2xl mx-auto text-lg hidden sm:block">
           {profile.aboutMe}
         </p>
 
