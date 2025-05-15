@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
-import { Experience } from "@/types/experience";
+import { ExperiencesQuery } from "@nevmstas/hygraph-client";
 
 interface ExperienceTabsProps {
-  experiences: Experience[];
-  onExperienceChange: (experience: Experience, index: number) => void;
+  experiences: ExperiencesQuery["experiences"];
+  onExperienceChange: (experience: ExperiencesQuery["experiences"][0], index: number) => void;
 }
 
 export function ExperienceTabs({ experiences, onExperienceChange }: ExperienceTabsProps) {

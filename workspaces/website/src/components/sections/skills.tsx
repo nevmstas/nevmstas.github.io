@@ -2,14 +2,28 @@ import { Badge } from "@/components/ui/badge";
 import gqlClient from "@/app/gql-client";
 import { SkillsTabs } from "@/components/widgets/skills-tab";
 import { SectionHeader } from "../common/section-header";
+import { SkillsQuery } from "@nevmstas/hygraph-client";
+
+const getSkills = async (
+  first: number = 10,
+  skip: number = 0
+): Promise<SkillsQuery["skills"]> => {
+  const response = await gqlClient.Skills({ first, skip });
+  if (response.skills.length === 0) {
+    return [];
+  }
+
+  return [...response.skills, ...(await getSkills(first, skip + first))];
+};
 
 export const SkillsSection = async () => {
-  const { skills } = await gqlClient.Skills();
+  const response = await gqlClient.SkillTypes();
+  const enumValues = response.__type?.enumValues ?? [];
 
-  const parsedSkills = skills?.[0] || {};
+  const skills = await getSkills();
 
   return (
-    <section id="skills" className="relative py-20 px-4">
+    <section id="skills" className="relative py-20 px-4 scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           headerText="Technical Proficiency"
@@ -24,7 +38,7 @@ export const SkillsSection = async () => {
           }
         />
 
-        <SkillsTabs skills={parsedSkills} />
+        <SkillsTabs skills={skills} skillTypes={enumValues} />
       </div>
 
       {/* Decorative elements */}

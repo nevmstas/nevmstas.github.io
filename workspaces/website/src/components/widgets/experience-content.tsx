@@ -1,29 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ExperienceTabs } from "./experience-tabs";
 import { ExperienceDetails } from "./experience-details";
-import { Experience, ExperienceContentProps } from "@/types/experience";
+import { ExperiencesQuery } from "@nevmstas/hygraph-client";
 
-export function ExperienceContent({ experiences }: ExperienceContentProps) {
+export function ExperienceContent({ experiences }: { experiences: ExperiencesQuery["experiences"] }) {
   const [activeExperience, setActiveExperience] = useState(experiences[0]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleExperienceChange = (experience: Experience, index: number) => {
+  const handleExperienceChange = (experience: ExperiencesQuery["experiences"][0], index: number) => {
     setActiveExperience(experience);
     setActiveIndex(index);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setStartX(e.pageX - e.currentTarget.offsetLeft);
+    setScrollLeft(e.currentTarget.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - e.currentTarget.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.style.scrollBehavior = 'smooth';
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
     <>
       {/* Mobile view - Horizontal scroll with one card visible */}
       <div className="lg:hidden overflow-hidden -mx-4">
-        <div className="overflow-x-auto snap-x snap-mandatory pb-4">
-          <div className="flex">
+        <div 
+          ref={scrollContainerRef}
+          className="overflow-x-auto snap-x snap-mandatory pb-4 cursor-grab active:cursor-grabbing scrollbar-none"
+          style={{
+            scrollBehavior: 'smooth',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onMouseMove={handleMouseMove}
+        >
+          <div className="flex select-none">
             {experiences.map((experience, index) => (
               <div 
                 key={index} 
-                className="w-full flex-shrink-0 snap-center px-4"
+                className="w-full flex-shrink-0 snap-center px-4 transition-all duration-300 ease-out"
+                style={{
+                  opacity: isDragging ? '0.95' : '1',
+                }}
               >
                 <ExperienceDetails
                   experience={experience}

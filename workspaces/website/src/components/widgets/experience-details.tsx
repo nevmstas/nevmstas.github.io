@@ -3,11 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Briefcase, Building2, Calendar, MapPin } from "lucide-react";
-import { Experience } from "@/types/experience";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import { ExperiencesQuery } from "@nevmstas/hygraph-client";
 
 interface ExperienceDetailsProps {
-  experience: Experience;
+  experience: ExperiencesQuery["experiences"][number];
   totalExperiences: number;
   currentIndex: number;
 }
@@ -71,13 +71,13 @@ export function ExperienceDetails({
             Technologies
           </h4>
           <div className="flex flex-wrap gap-2">
-            {experience.technologies.map((tech, i) => (
+            {experience.skills.map((skill, i) => (
               <Badge
                 key={i}
                 variant="secondary"
                 className="bg-gray-800 text-cyan-400 hover:bg-gray-700"
               >
-                {capitalizeFirstLetter(tech)}
+                {capitalizeFirstLetter(skill.name)}
               </Badge>
             ))}
           </div>

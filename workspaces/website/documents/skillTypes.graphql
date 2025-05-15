@@ -1,0 +1,7 @@
+query SkillTypes {
+	__type(name: "SkillType") {
+		enumValues {
+		  name
+		}
+  }
+}

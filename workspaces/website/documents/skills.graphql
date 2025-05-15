@@ -1,0 +1,6 @@
+query Skills($first: Int, $skip: Int) {
+  skills(first: $first, skip: $skip) {
+    name
+    type
+  }
+}

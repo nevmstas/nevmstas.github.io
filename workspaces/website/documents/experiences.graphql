@@ -11,6 +11,8 @@ query Experiences {
       url
       id
     }
-    technologies
+    skills {
+			name
+    }
   }
 }

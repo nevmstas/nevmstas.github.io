@@ -16,25 +16,25 @@ export function Footer() {
               </span>
             </div>
             <p className="text-gray-400 mb-6">
-              Building the future of web3 with cutting-edge technology and innovative solutions.
+              Building the future of web industry with cutting-edge technology and innovative solutions.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+              <Link href="https://github.com/nevmstas" className="text-gray-400 hover:text-cyan-400 transition-colors">
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+              {/* <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+              </Link> */}
+              <Link href="https://www.linkedin.com/in/nevmstas/" className="text-gray-400 hover:text-cyan-400 transition-colors">
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
+              {/* <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
                 <Globe className="h-5 w-5" />
                 <span className="sr-only">Website</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -57,11 +57,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#links" className="text-gray-400 hover:text-cyan-400 transition-colors">
-                  Connect
-                </Link>
-              </li>
-              <li>
                 <Link href="#education" className="text-gray-400 hover:text-cyan-400 transition-colors">
                   Education
                 </Link>
@@ -69,7 +64,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="text-lg font-bold mb-6">Stay Updated</h3>
             <p className="text-gray-400 mb-4">Subscribe to receive updates on my latest projects and tech insights.</p>
             <div className="flex space-x-2">
@@ -83,12 +78,12 @@ export function Footer() {
               </Button>
             </div>
             <p className="text-xs text-gray-500 mt-2">I respect your privacy. No spam, ever.</p>
-          </div>
+          </div> */}
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-500 mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} Stas Nevmyvaka. All rights reserved.
+            &copy; {new Date().getFullYear()} Stas Nevmyvaka.
           </p>
         </div>
       </div>

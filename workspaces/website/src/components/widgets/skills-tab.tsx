@@ -3,29 +3,26 @@
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Code2, 
-  Smartphone, 
-  Server, 
-  Blocks
-} from "lucide-react";
+import { Code2, Smartphone, Server, Blocks } from "lucide-react";
 import * as React from "react";
-import { Technologies } from "@nevmstas/hygraph-client";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
-type SkillsTabsProps = {
-  skills: {
-    mobile: Array<Technologies>;
-    backend: Array<Technologies>;
-    frontend: Array<Technologies>;
-    blockchain: Array<Technologies>;
-  };
+type Skill = {
+  name: string;
+  type: string;
 };
 
-export function SkillsTabs({ skills }: SkillsTabsProps) {
-  const [activeTab, setActiveTab] = useState(
-    Object.keys(skills)[0] || "frontend"
-  );
+type SkillType = {
+  name: string;
+};
+
+type SkillsTabsProps = {
+  skills: Array<Skill>;
+  skillTypes: Array<SkillType>;
+};
+
+export function SkillsTabs({ skills, skillTypes }: SkillsTabsProps) {
+  const [activeTab, setActiveTab] = useState("frontend");
 
   const iconMap: Record<string, React.JSX.Element> = {
     frontend: <Code2 className="h-6 w-6 sm:h-5 sm:w-5" />,
@@ -34,6 +31,14 @@ export function SkillsTabs({ skills }: SkillsTabsProps) {
     blockchain: <Blocks className="h-6 w-6 sm:h-5 sm:w-5" />,
   };
 
+  const groupedSkills = skills.reduce((acc, skill) => {
+    if (!acc[skill.type]) {
+      acc[skill.type] = [];
+    }
+    acc[skill.type].push(skill);
+    return acc;
+  }, {} as Record<string, Array<Skill>>);
+
   return (
     <Tabs
       defaultValue={activeTab}
@@ -41,28 +46,33 @@ export function SkillsTabs({ skills }: SkillsTabsProps) {
       onValueChange={setActiveTab}
       className="w-full"
     >
-      <TabsList className="grid grid-cols-4 mb-10 bg-gray-900/50 p-1">
-        {Object.entries(skills).map(([key]) => (
+      <TabsList className="grid grid-cols-4 mb-10 bg-gray-900/50 mx-auto sm:mx-0">
+        {skillTypes.map((type) => (
           <TabsTrigger
-            key={key}
-            value={key}
-            className="data-[state=active]:bg-gray-800 data-[state=active]:text-cyan-400 capitalize cursor-pointer p-2 sm:p-1"
+            key={type.name}
+            value={type.name}
+            className="data-[state=active]:bg-gray-800 data-[state=active]:text-cyan-400 capitalize cursor-pointer"
           >
-            <div className="flex items-center justify-center gap-2">
-              {iconMap[key] || <Code2 className="h-200 w-200 sm:h-5 sm:w-5" />}
-              <span className="hidden sm:inline">{key}</span>
+            <div className="flex items-center justify-center gap-2 flex-col sm:flex-row">
+              {iconMap[type.name] || (
+                <Code2 className="h-200 w-200 sm:h-5 sm:w-5" />
+              )}
+              {/* <span className="hidden sm:inline">{type.name}</span> */}
+              <span>{type.name}</span>
             </div>
           </TabsTrigger>
         ))}
       </TabsList>
 
-      {Object.entries(skills).map(([category, categorySkills]) => (
-        <TabsContent key={category} value={category} className="space-y-8">
+      {skillTypes.map((type) => (
+        <TabsContent key={type.name} value={type.name} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-            {categorySkills.map((skill) => (
-              <div key={skill} className="space-y-2">
+            {groupedSkills[type.name]?.map((skill) => (
+              <div key={skill.name} className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="font-mono text-sm">{capitalizeFirstLetter(skill)}</span>
+                  <span className="font-mono text-sm">
+                    {capitalizeFirstLetter(skill.name)}
+                  </span>
                 </div>
                 <Progress
                   value={100}
