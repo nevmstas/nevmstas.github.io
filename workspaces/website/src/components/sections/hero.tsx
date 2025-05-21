@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Terminal } from "lucide-react"
 import { GlitchText } from "@/components/widgets"
-import { ScrollButton } from "../common/scroll-button"
-import gqlClient from "@/app/gql-client"
+import { ScrollButton } from "../common"
+import gqlClient from "@/gql-client"
+import { ResumeButton } from "../common";
 
 export async function HeroSection() {
   const { profiles } = await gqlClient.Profile();
@@ -37,9 +36,7 @@ export async function HeroSection() {
         </p>
 
         <div className="flex flex-wrap gap-4 justify-center mt-8">
-          <Button className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-none">
-            <Terminal className="mr-2 h-4 w-4" /> Generate CV
-          </Button>
+          <ResumeButton />
         </div>
       </div>
 

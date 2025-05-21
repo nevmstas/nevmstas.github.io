@@ -6,7 +6,7 @@ interface VerifyButtonProps {
   link: string;
 }
 
-export function VerifyButton({ link }: VerifyButtonProps) {
+const VerifyButton = ({ link }: VerifyButtonProps) => {
   return (
     <button 
       className="text-xs text-cyan-400 flex items-center hover:text-cyan-300 transition-colors" 
@@ -15,4 +15,6 @@ export function VerifyButton({ link }: VerifyButtonProps) {
       Verify <ExternalLink className="h-3 w-3 ml-1" />
     </button>
   );
-} 
+}
+
+export default VerifyButton;

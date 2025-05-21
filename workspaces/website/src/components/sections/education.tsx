@@ -1,9 +1,9 @@
-import gqlClient from "@/app/gql-client"
+import gqlClient from "@/gql-client"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { GraduationCap, Calendar, Award } from "lucide-react"
 import { VerifyButton } from "@/components/common"
-import { SectionHeader } from "../common/section-header"
+import { SectionHeader } from "../common"
 
 export const EducationSection = async () => {
   const { certifications } = await gqlClient.Certifications()

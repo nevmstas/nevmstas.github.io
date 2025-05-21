@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import gqlClient from "@/app/gql-client";
+import gqlClient from "@/gql-client";
 import { SkillsTabs } from "@/components/widgets/skills-tab";
-import { SectionHeader } from "../common/section-header";
+import { SectionHeader } from "../common";
 import { SkillsQuery } from "@nevmstas/hygraph-client";
 
 const getSkills = async (

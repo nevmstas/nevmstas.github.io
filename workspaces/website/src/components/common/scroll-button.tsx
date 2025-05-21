@@ -3,15 +3,14 @@
 import { ArrowDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function ScrollButton() {
+const ScrollButton = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const scrollToNextSection = () => {
     const sections = document.querySelectorAll("section");
-    const currentSection = document.elementFromPoint(
-      window.innerWidth / 2,
-      window.innerHeight / 2
-    )?.closest("section");
+    const currentSection = document
+      .elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)
+      ?.closest("section");
 
     if (currentSection) {
       const currentIndex = Array.from(sections).indexOf(currentSection);
@@ -28,7 +27,7 @@ export function ScrollButton() {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      
+
       // Hide button when near the bottom of the page
       setIsVisible(scrollPosition < documentHeight - windowHeight - 100);
     };
@@ -48,4 +47,6 @@ export function ScrollButton() {
       <ArrowDown className="h-6 w-6 text-cyan-400" />
     </button>
   );
-} 
+};
+
+export default ScrollButton;

@@ -4,7 +4,7 @@ interface SectionHeaderProps {
   badge: React.JSX.Element;
 }
 
-export const SectionHeader = ({
+const SectionHeader = ({
   headerText,
   description,
   badge,
@@ -19,3 +19,5 @@ export const SectionHeader = ({
     </>
   );
 };
+
+export default SectionHeader;

@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { SectionHeader } from "../common/section-header";
+import { SectionHeader } from "../common";
 import {
   Github,
   Linkedin,

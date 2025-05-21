@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Hexagon, Send, Github, Twitter, Linkedin, Globe } from "lucide-react"
+import { Hexagon, Github, Linkedin } from "lucide-react"
 import Link from "next/link"
 
 export function Footer() {

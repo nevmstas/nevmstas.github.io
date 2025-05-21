@@ -1,0 +1,49 @@
+query Resume {
+  profiles {
+    id
+    name
+    role
+    aboutMe
+    avatar {
+      url
+    }
+    contactEmail
+    linkedIn
+    github
+  }
+  skills(first: 100) {
+    name
+  }
+  experiences(orderBy: startDate_DESC) {
+    id
+    company
+    startDate
+    endDate
+    jobTitile
+    location
+    description
+    companyImage {
+      url
+      id
+    }
+    skills {
+      name
+    }
+  }
+  educations {
+    id
+    period
+    degree
+    institution
+    achievements
+    specialization
+  }
+  certifications {
+    id
+    name
+    issuer
+    date
+    credentialId
+    link
+  }
+}

@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "../common";
 import { ExperienceContent } from "../widgets/experience-content";
-import gqlClient from "@/app/gql-client";
+import gqlClient from "@/gql-client";
 
 export async function ExperienceSection() {
   const { experiences } = await gqlClient.Experiences();

@@ -2153,10 +2153,10 @@ export type Experience = Entity & Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
+  skills: Array<Skill>;
   /** System stage field */
   stage: Stage;
   startDate?: Maybe<Scalars['Date']['output']>;
-  technologies: Array<Technologies>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
@@ -2209,6 +2209,19 @@ export type ExperienceScheduledInArgs = {
 };
 
 
+export type ExperienceSkillsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<SkillOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<SkillWhereInput>;
+};
+
+
 export type ExperienceUpdatedByArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
   locales?: InputMaybe<Array<Locale>>;
@@ -2239,8 +2252,8 @@ export type ExperienceCreateInput = {
   endDate?: InputMaybe<Scalars['Date']['input']>;
   jobTitile?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<SkillCreateManyInlineInput>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
-  technologies?: InputMaybe<Array<Technologies>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -2417,6 +2430,9 @@ export type ExperienceManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  skills_every?: InputMaybe<SkillWhereInput>;
+  skills_none?: InputMaybe<SkillWhereInput>;
+  skills_some?: InputMaybe<SkillWhereInput>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
   /** All values greater than the given value. */
   startDate_gt?: InputMaybe<Scalars['Date']['input']>;
@@ -2432,16 +2448,6 @@ export type ExperienceManyWhereInput = {
   startDate_not?: InputMaybe<Scalars['Date']['input']>;
   /** All values that are not contained in given list. */
   startDate_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  technologies?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  technologies_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  technologies_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  technologies_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  technologies_not?: InputMaybe<Array<Technologies>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2479,8 +2485,6 @@ export enum ExperienceOrderByInput {
   PublishedAtDesc = 'publishedAt_DESC',
   StartDateAsc = 'startDate_ASC',
   StartDateDesc = 'startDate_DESC',
-  TechnologiesAsc = 'technologies_ASC',
-  TechnologiesDesc = 'technologies_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
@@ -2492,8 +2496,8 @@ export type ExperienceUpdateInput = {
   endDate?: InputMaybe<Scalars['Date']['input']>;
   jobTitile?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<SkillUpdateManyInlineInput>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
-  technologies?: InputMaybe<Array<Technologies>>;
 };
 
 export type ExperienceUpdateManyInlineInput = {
@@ -2520,7 +2524,6 @@ export type ExperienceUpdateManyInput = {
   jobTitile?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
-  technologies?: InputMaybe<Array<Technologies>>;
 };
 
 export type ExperienceUpdateManyWithNestedWhereInput = {
@@ -2722,6 +2725,9 @@ export type ExperienceWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  skills_every?: InputMaybe<SkillWhereInput>;
+  skills_none?: InputMaybe<SkillWhereInput>;
+  skills_some?: InputMaybe<SkillWhereInput>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
   /** All values greater than the given value. */
   startDate_gt?: InputMaybe<Scalars['Date']['input']>;
@@ -2737,16 +2743,6 @@ export type ExperienceWhereInput = {
   startDate_not?: InputMaybe<Scalars['Date']['input']>;
   /** All values that are not contained in given list. */
   startDate_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  technologies?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  technologies_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  technologies_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  technologies_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  technologies_not?: InputMaybe<Array<Technologies>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6076,20 +6072,18 @@ export type ScheduledReleaseWhereUniqueInput = {
 
 export type Skill = Entity & Node & {
   __typename?: 'Skill';
-  backend: Array<Technologies>;
-  blockchain: Array<Technologies>;
   /** The time the document was created */
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
   createdBy?: Maybe<User>;
   /** Get the document in other stages */
   documentInStages: Array<Skill>;
-  frontend: Array<Technologies>;
+  experiences: Array<Experience>;
   /** List of Skill versions */
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  mobile: Array<Technologies>;
+  name: Scalars['String']['output'];
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
@@ -6097,6 +6091,7 @@ export type Skill = Entity & Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
+  type: SkillType;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
@@ -6114,6 +6109,19 @@ export type SkillDocumentInStagesArgs = {
   includeCurrent?: Scalars['Boolean']['input'];
   inheritLocale?: Scalars['Boolean']['input'];
   stages?: Array<Stage>;
+};
+
+
+export type SkillExperiencesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<ExperienceOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ExperienceWhereInput>;
 };
 
 
@@ -6165,11 +6173,10 @@ export type SkillConnection = {
 };
 
 export type SkillCreateInput = {
-  backend?: InputMaybe<Array<Technologies>>;
-  blockchain?: InputMaybe<Array<Technologies>>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  frontend?: InputMaybe<Array<Technologies>>;
-  mobile?: InputMaybe<Array<Technologies>>;
+  experiences?: InputMaybe<ExperienceCreateManyInlineInput>;
+  name: Scalars['String']['input'];
+  type: SkillType;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -6206,26 +6213,6 @@ export type SkillManyWhereInput = {
   OR?: InputMaybe<Array<SkillWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  backend?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  backend_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  backend_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  backend_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  backend_not?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  blockchain?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  blockchain_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  blockchain_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  blockchain_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  blockchain_not?: InputMaybe<Array<Technologies>>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6245,16 +6232,9 @@ export type SkillManyWhereInput = {
   documentInStages_every?: InputMaybe<SkillWhereStageInput>;
   documentInStages_none?: InputMaybe<SkillWhereStageInput>;
   documentInStages_some?: InputMaybe<SkillWhereStageInput>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  frontend?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  frontend_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  frontend_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  frontend_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  frontend_not?: InputMaybe<Array<Technologies>>;
+  experiences_every?: InputMaybe<ExperienceWhereInput>;
+  experiences_none?: InputMaybe<ExperienceWhereInput>;
+  experiences_some?: InputMaybe<ExperienceWhereInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -6274,16 +6254,25 @@ export type SkillManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  mobile?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  mobile_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  mobile_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  mobile_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  mobile_not?: InputMaybe<Array<Technologies>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  name_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  name_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  name_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  name_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  name_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  name_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  name_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  name_starts_with?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6303,6 +6292,13 @@ export type SkillManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  type?: InputMaybe<SkillType>;
+  /** All values that are contained in given list. */
+  type_in?: InputMaybe<Array<InputMaybe<SkillType>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  type_not?: InputMaybe<SkillType>;
+  /** All values that are not contained in given list. */
+  type_not_in?: InputMaybe<Array<InputMaybe<SkillType>>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6322,29 +6318,31 @@ export type SkillManyWhereInput = {
 };
 
 export enum SkillOrderByInput {
-  BackendAsc = 'backend_ASC',
-  BackendDesc = 'backend_DESC',
-  BlockchainAsc = 'blockchain_ASC',
-  BlockchainDesc = 'blockchain_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
-  FrontendAsc = 'frontend_ASC',
-  FrontendDesc = 'frontend_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
-  MobileAsc = 'mobile_ASC',
-  MobileDesc = 'mobile_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  TypeAsc = 'type_ASC',
+  TypeDesc = 'type_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
 
+export enum SkillType {
+  Backend = 'backend',
+  Blockchain = 'blockchain',
+  Frontend = 'frontend',
+  Mobile = 'mobile'
+}
+
 export type SkillUpdateInput = {
-  backend?: InputMaybe<Array<Technologies>>;
-  blockchain?: InputMaybe<Array<Technologies>>;
-  frontend?: InputMaybe<Array<Technologies>>;
-  mobile?: InputMaybe<Array<Technologies>>;
+  experiences?: InputMaybe<ExperienceUpdateManyInlineInput>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<SkillType>;
 };
 
 export type SkillUpdateManyInlineInput = {
@@ -6365,10 +6363,8 @@ export type SkillUpdateManyInlineInput = {
 };
 
 export type SkillUpdateManyInput = {
-  backend?: InputMaybe<Array<Technologies>>;
-  blockchain?: InputMaybe<Array<Technologies>>;
-  frontend?: InputMaybe<Array<Technologies>>;
-  mobile?: InputMaybe<Array<Technologies>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<SkillType>;
 };
 
 export type SkillUpdateManyWithNestedWhereInput = {
@@ -6430,26 +6426,6 @@ export type SkillWhereInput = {
   OR?: InputMaybe<Array<SkillWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  backend?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  backend_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  backend_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  backend_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  backend_not?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  blockchain?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  blockchain_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  blockchain_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  blockchain_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  blockchain_not?: InputMaybe<Array<Technologies>>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6469,16 +6445,9 @@ export type SkillWhereInput = {
   documentInStages_every?: InputMaybe<SkillWhereStageInput>;
   documentInStages_none?: InputMaybe<SkillWhereStageInput>;
   documentInStages_some?: InputMaybe<SkillWhereStageInput>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  frontend?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  frontend_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  frontend_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  frontend_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  frontend_not?: InputMaybe<Array<Technologies>>;
+  experiences_every?: InputMaybe<ExperienceWhereInput>;
+  experiences_none?: InputMaybe<ExperienceWhereInput>;
+  experiences_some?: InputMaybe<ExperienceWhereInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']['input']>;
@@ -6498,16 +6467,25 @@ export type SkillWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
-  /** Matches if the field array contains *all* items provided to the filter and order does match */
-  mobile?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains *all* items provided to the filter */
-  mobile_contains_all?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contain any of the items provided to the filter */
-  mobile_contains_none?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array contains at least one item provided to the filter */
-  mobile_contains_some?: InputMaybe<Array<Technologies>>;
-  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
-  mobile_not?: InputMaybe<Array<Technologies>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  name_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  name_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  name_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  name_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  name_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  name_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  name_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  name_starts_with?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6527,6 +6505,13 @@ export type SkillWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  type?: InputMaybe<SkillType>;
+  /** All values that are contained in given list. */
+  type_in?: InputMaybe<Array<InputMaybe<SkillType>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  type_not?: InputMaybe<SkillType>;
+  /** All values that are not contained in given list. */
+  type_not_in?: InputMaybe<Array<InputMaybe<SkillType>>>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6576,27 +6561,6 @@ export enum SystemDateTimeFieldVariation {
   Base = 'BASE',
   Combined = 'COMBINED',
   Localization = 'LOCALIZATION'
-}
-
-export enum Technologies {
-  Aws = 'aws',
-  C = 'c',
-  Docker = 'docker',
-  Expo = 'expo',
-  GraphQl = 'graphQl',
-  JavaScript = 'javaScript',
-  MaterialUi = 'materialUi',
-  MongoDb = 'mongoDb',
-  NextJs = 'nextJs',
-  React = 'react',
-  ReactNative = 'reactNative',
-  ReactTestingLibrary = 'reactTestingLibrary',
-  Redux = 'redux',
-  Solidity = 'solidity',
-  Storybook = 'storybook',
-  TailwindCss = 'tailwindCss',
-  Typescript = 'typescript',
-  Web3 = 'web3'
 }
 
 export type UnpublishLocaleInput = {
@@ -7098,6 +7062,114 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+/** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
+export type __EnumValue = {
+  __typename?: '__EnumValue';
+  name: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  isDeprecated: Scalars['Boolean']['output'];
+  deprecationReason?: Maybe<Scalars['String']['output']>;
+};
+
+/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
+export type __Field = {
+  __typename?: '__Field';
+  name: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  args: Array<__InputValue>;
+  type: __Type;
+  isDeprecated: Scalars['Boolean']['output'];
+  deprecationReason?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
+export type __FieldArgsArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value. */
+export type __InputValue = {
+  __typename?: '__InputValue';
+  name: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  type: __Type;
+  /** A GraphQL-formatted string representing the default value for this input value. */
+  defaultValue?: Maybe<Scalars['String']['output']>;
+  isDeprecated: Scalars['Boolean']['output'];
+  deprecationReason?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __Type = {
+  __typename?: '__Type';
+  kind: __TypeKind;
+  name?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  specifiedByURL?: Maybe<Scalars['String']['output']>;
+  fields?: Maybe<Array<__Field>>;
+  interfaces?: Maybe<Array<__Type>>;
+  possibleTypes?: Maybe<Array<__Type>>;
+  enumValues?: Maybe<Array<__EnumValue>>;
+  inputFields?: Maybe<Array<__InputValue>>;
+  ofType?: Maybe<__Type>;
+  isOneOf?: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeFieldsArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeEnumValuesArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeInputFieldsArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** An enum describing what kind of type a given `__Type` is. */
+export enum __TypeKind {
+  /** Indicates this type is a scalar. */
+  Scalar = 'SCALAR',
+  /** Indicates this type is an object. `fields` and `interfaces` are valid fields. */
+  Object = 'OBJECT',
+  /** Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields. */
+  Interface = 'INTERFACE',
+  /** Indicates this type is a union. `possibleTypes` is a valid field. */
+  Union = 'UNION',
+  /** Indicates this type is an enum. `enumValues` is a valid field. */
+  Enum = 'ENUM',
+  /** Indicates this type is an input object. `inputFields` is a valid field. */
+  InputObject = 'INPUT_OBJECT',
+  /** Indicates this type is a list. `ofType` is a valid field. */
+  List = 'LIST',
+  /** Indicates this type is a non-null. `ofType` is a valid field. */
+  NonNull = 'NON_NULL'
+}
+
 export type CertificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7111,17 +7183,30 @@ export type EducationQuery = { __typename?: 'Query', educations: Array<{ __typen
 export type ExperiencesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExperiencesQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, technologies: Array<Technologies>, companyImage?: { __typename?: 'Asset', url: string, id: string } | null }> };
+export type ExperiencesQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, companyImage?: { __typename?: 'Asset', url: string, id: string } | null, skills: Array<{ __typename?: 'Skill', name: string }> }> };
 
 export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProfileQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }> };
 
-export type SkillsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ResumeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', frontend: Array<Technologies>, backend: Array<Technologies>, mobile: Array<Technologies>, blockchain: Array<Technologies> }> };
+export type ResumeQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }>, skills: Array<{ __typename?: 'Skill', name: string }>, experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, companyImage?: { __typename?: 'Asset', url: string, id: string } | null, skills: Array<{ __typename?: 'Skill', name: string }> }>, educations: Array<{ __typename?: 'Education', id: string, period?: string | null, degree?: string | null, institution?: string | null, achievements: Array<string>, specialization?: string | null }>, certifications: Array<{ __typename?: 'Certification', id: string, name?: string | null, issuer?: string | null, date?: any | null, credentialId?: string | null, link?: string | null }> };
+
+export type SkillTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SkillTypesQuery = { __typename?: 'Query', __type?: { __typename?: '__Type', enumValues?: Array<{ __typename?: '__EnumValue', name: string }> | null } | null };
+
+export type SkillsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SkillsQuery = { __typename?: 'Query', skills: Array<{ __typename?: 'Skill', name: string, type: SkillType }> };
 
 
 export const CertificationsDocument = gql`
@@ -7162,7 +7247,9 @@ export const ExperiencesDocument = gql`
       url
       id
     }
-    technologies
+    skills {
+      name
+    }
   }
 }
     `;
@@ -7182,13 +7269,71 @@ export const ProfileDocument = gql`
   }
 }
     `;
+export const ResumeDocument = gql`
+    query Resume {
+  profiles {
+    id
+    name
+    role
+    aboutMe
+    avatar {
+      url
+    }
+    contactEmail
+    linkedIn
+    github
+  }
+  skills(first: 100) {
+    name
+  }
+  experiences(orderBy: startDate_DESC) {
+    id
+    company
+    startDate
+    endDate
+    jobTitile
+    location
+    description
+    companyImage {
+      url
+      id
+    }
+    skills {
+      name
+    }
+  }
+  educations {
+    id
+    period
+    degree
+    institution
+    achievements
+    specialization
+  }
+  certifications {
+    id
+    name
+    issuer
+    date
+    credentialId
+    link
+  }
+}
+    `;
+export const SkillTypesDocument = gql`
+    query SkillTypes {
+  __type(name: "SkillType") {
+    enumValues {
+      name
+    }
+  }
+}
+    `;
 export const SkillsDocument = gql`
-    query Skills {
-  skills {
-    frontend
-    backend
-    mobile
-    blockchain
+    query Skills($first: Int, $skip: Int) {
+  skills(first: $first, skip: $skip) {
+    name
+    type
   }
 }
     `;
@@ -7211,6 +7356,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Profile(variables?: ProfileQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ProfileQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ProfileQuery>(ProfileDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Profile', 'query', variables);
+    },
+    Resume(variables?: ResumeQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ResumeQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ResumeQuery>(ResumeDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Resume', 'query', variables);
+    },
+    SkillTypes(variables?: SkillTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SkillTypesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SkillTypesQuery>(SkillTypesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'SkillTypes', 'query', variables);
     },
     Skills(variables?: SkillsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SkillsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<SkillsQuery>(SkillsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Skills', 'query', variables);

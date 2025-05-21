@@ -1,0 +1,16 @@
+{
+  "name": "@nevmstas/resume",
+  "packageManager": "yarn@4.7.0",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@nevmstas/hygraph-client": "workspace:*",
+    "@react-pdf/renderer": "^4.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "typescript": "^5.8.3"
+  }
+}
