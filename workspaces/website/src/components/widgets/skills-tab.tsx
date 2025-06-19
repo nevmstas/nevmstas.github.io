@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code2, Smartphone, Server, Blocks } from "lucide-react";
+import { Code2, Smartphone, Server, Blocks, Container } from "lucide-react";
 import * as React from "react";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
@@ -29,6 +29,7 @@ export function SkillsTabs({ skills, skillTypes }: SkillsTabsProps) {
     backend: <Server className="h-6 w-6 sm:h-5 sm:w-5" />,
     mobile: <Smartphone className="h-6 w-6 sm:h-5 sm:w-5" />,
     blockchain: <Blocks className="h-6 w-6 sm:h-5 sm:w-5" />,
+    cicd: <Container className="h-6 w-6 sm:h-5 sm:w-5" />,
   };
 
   const groupedSkills = skills.reduce((acc, skill) => {

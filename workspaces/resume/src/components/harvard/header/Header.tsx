@@ -38,21 +38,21 @@ const Header = ({ name, contactEmail, linkedIn, github }: ResumeQuery['profiles'
         <Text style={styles.contact}>{contactEmail}</Text>
         <Text style={styles.divider}>•</Text>
         <Link
-          src={linkedIn || "https://www.linkedin.com/in/nevmstas"}
+          src={`https://www.linkedin.com/${linkedIn}`}
           style={styles.contact}
         >
-          in/nevmstas
+          {linkedIn}
         </Link>
         <Text style={styles.divider}>•</Text>
         <Link
-          src={github || "https://www.github.com/nevmstas"}
+          src={`https://www.github.com/${github}`}
           style={styles.contact}
         >
-          nevmstas
+          {github}
         </Link>
         <Text style={styles.divider}>•</Text>
         <Link src={`tel:+996550046336`} style={styles.contact}>
-          +996550046336
+          {`+996 (550) 04 63 36`}
         </Link>
       </View>
     </View>

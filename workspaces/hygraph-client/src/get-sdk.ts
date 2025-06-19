@@ -6084,11 +6084,13 @@ export type Skill = Entity & Node & {
   /** The unique identifier */
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  order?: Maybe<Scalars['Int']['output']>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
+  showOnCv: Scalars['Boolean']['output'];
   /** System stage field */
   stage: Stage;
   type: SkillType;
@@ -6176,6 +6178,8 @@ export type SkillCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   experiences?: InputMaybe<ExperienceCreateManyInlineInput>;
   name: Scalars['String']['input'];
+  order?: InputMaybe<Scalars['Int']['input']>;
+  showOnCv: Scalars['Boolean']['input'];
   type: SkillType;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -6273,6 +6277,21 @@ export type SkillManyWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  order_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  order_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  order_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  order_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  order_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  order_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  order_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6292,6 +6311,9 @@ export type SkillManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  showOnCv?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  showOnCv_not?: InputMaybe<Scalars['Boolean']['input']>;
   type?: InputMaybe<SkillType>;
   /** All values that are contained in given list. */
   type_in?: InputMaybe<Array<InputMaybe<SkillType>>>;
@@ -6324,8 +6346,12 @@ export enum SkillOrderByInput {
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
   NameDesc = 'name_DESC',
+  OrderAsc = 'order_ASC',
+  OrderDesc = 'order_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  ShowOnCvAsc = 'showOnCv_ASC',
+  ShowOnCvDesc = 'showOnCv_DESC',
   TypeAsc = 'type_ASC',
   TypeDesc = 'type_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
@@ -6335,6 +6361,7 @@ export enum SkillOrderByInput {
 export enum SkillType {
   Backend = 'backend',
   Blockchain = 'blockchain',
+  Cicd = 'cicd',
   Frontend = 'frontend',
   Mobile = 'mobile'
 }
@@ -6342,6 +6369,8 @@ export enum SkillType {
 export type SkillUpdateInput = {
   experiences?: InputMaybe<ExperienceUpdateManyInlineInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  showOnCv?: InputMaybe<Scalars['Boolean']['input']>;
   type?: InputMaybe<SkillType>;
 };
 
@@ -6364,6 +6393,8 @@ export type SkillUpdateManyInlineInput = {
 
 export type SkillUpdateManyInput = {
   name?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  showOnCv?: InputMaybe<Scalars['Boolean']['input']>;
   type?: InputMaybe<SkillType>;
 };
 
@@ -6486,6 +6517,21 @@ export type SkillWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than the given value. */
+  order_gt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values greater than or equal the given value. */
+  order_gte?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are contained in given list. */
+  order_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** All values less than the given value. */
+  order_lt?: InputMaybe<Scalars['Int']['input']>;
+  /** All values less than or equal the given value. */
+  order_lte?: InputMaybe<Scalars['Int']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  order_not?: InputMaybe<Scalars['Int']['input']>;
+  /** All values that are not contained in given list. */
+  order_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6505,6 +6551,9 @@ export type SkillWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  showOnCv?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  showOnCv_not?: InputMaybe<Scalars['Boolean']['input']>;
   type?: InputMaybe<SkillType>;
   /** All values that are contained in given list. */
   type_in?: InputMaybe<Array<InputMaybe<SkillType>>>;
@@ -7283,7 +7332,7 @@ export const ResumeDocument = gql`
     linkedIn
     github
   }
-  skills(first: 100) {
+  skills(first: 100, orderBy: order_ASC, where: {showOnCv: true}) {
     name
   }
   experiences(orderBy: startDate_DESC) {

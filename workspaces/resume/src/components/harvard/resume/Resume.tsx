@@ -79,7 +79,7 @@ const HarvardResume = ({
                   subtitle={experience.company || ''}
                   description={experience.description}
                   style={getItemMarginStyle(
-                    sharedStyles.itemMarginBottomSmall,
+                    sharedStyles.itemMarginBottom,
                     index,
                     experiences.length,
                   )}
@@ -96,6 +96,7 @@ const HarvardResume = ({
                   dates={education.period || ''}
                   title={`${education.degree} in ${education.specialization}`}
                   subtitle={education.institution || ''}
+                  description={education.achievements}
                   style={getItemMarginStyle(
                     sharedStyles.itemMarginBottom,
                     index,
