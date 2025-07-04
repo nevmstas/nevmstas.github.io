@@ -12,7 +12,8 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "graphql": "^16.10.0",
-    "graphql-request": "^6.1.0"
+    "graphql-request": "^6.1.0",
+    "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",

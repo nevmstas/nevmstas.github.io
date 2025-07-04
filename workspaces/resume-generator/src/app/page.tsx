@@ -7,6 +7,7 @@ import ProfileForm from "../components/ProfileForm";
 import SkillsForm from "../components/SkillsForm";
 import ExperiencesForm from "../components/ExperiencesForm";
 import ResumeButton from "@/components/common/resume-button";
+import ImportJson from "../components/ImportJson";
 
 export default function Home() {
   const [resume, setResume] = useState<ResumeQuery | null>(null);
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <ResumeProvider initialResume={resume}>
       <div className="container mx-auto p-8 space-y-8">
+        <ImportJson />
         <ResumeButton />
         <ProfileForm />
         <SkillsForm />
