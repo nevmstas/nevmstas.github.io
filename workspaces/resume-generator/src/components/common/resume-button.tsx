@@ -1,10 +1,10 @@
 "use client";
 
 import { HarvardResume, useResume } from "@nevmstas/resume";
-import GenerateCVButton from "./generate-cv-button";
+import { GenerateCVButton } from "./generate-cv-button";
 import { useResume as useResumeContext } from "../../context/ResumeContext";
 
-const ResumeButton = () => {
+export const ResumeButton = () => {
   const { resume } = useResumeContext()
   const { openResume } = useResume(HarvardResume, resume);
 
@@ -18,5 +18,3 @@ const ResumeButton = () => {
     />
   );
 };
-
-export default ResumeButton;

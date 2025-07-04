@@ -2,9 +2,9 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useResume } from "../context/ResumeContext";
+import { useResume } from "@/context/ResumeContext";
 
-export default function ProfileForm() {
+export const ProfileForm = () => {
   const { resume, setResume } = useResume();
   const profile = resume.profiles[0];
 

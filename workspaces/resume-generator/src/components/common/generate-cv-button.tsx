@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes } from "react";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const GenerateCVButton = (props: Props) => (
+export const GenerateCVButton = (props: Props) => (
   <Button
     className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-none cursor-pointer"
     {...props}
@@ -13,5 +13,3 @@ const GenerateCVButton = (props: Props) => (
     Generate CV
   </Button>
 );
-
-export default GenerateCVButton;
