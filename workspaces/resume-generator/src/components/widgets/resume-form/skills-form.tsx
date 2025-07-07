@@ -1,36 +1,37 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useResume } from "@/context/ResumeContext";
+import { UseFormReturn, useFieldArray } from "react-hook-form";
+import { ResumeQuery } from "@nevmstas/hygraph-client";
 import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
-import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableSkillItem } from './sortable-skill-item';
 
-export const SkillsForm = () => {
-  const { resume, setResume } = useResume();
+interface SkillsFormProps {
+  form: UseFormReturn<ResumeQuery>;
+}
 
-  const handleSkillChange = (idx: number, value: string) => {
-    const newSkills = [...resume.skills];
-    newSkills[idx] = { name: value };
-    setResume({ ...resume, skills: newSkills });
-  };
+export const SkillsForm = ({ form }: SkillsFormProps) => {
+  const { control } = form;
+  const { fields, append, remove, move } = useFieldArray({
+    control,
+    name: "skills",
+  });
 
   const addSkill = () => {
-    setResume({ ...resume, skills: [...resume.skills, { name: "" }] });
+    append({ name: "" });
   };
 
   const removeSkill = (idx: number) => {
-    const newSkills = resume.skills.filter((_, i) => i !== idx);
-    setResume({ ...resume, skills: newSkills });
+    remove(idx);
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (active.id !== over?.id) {
-      const oldIndex = resume.skills.findIndex((_, idx) => idx.toString() === active.id);
-      const newIndex = resume.skills.findIndex((_, idx) => idx.toString() === over?.id);
+      const oldIndex = fields.findIndex((_, idx) => idx.toString() === active.id);
+      const newIndex = fields.findIndex((_, idx) => idx.toString() === over?.id);
       if (oldIndex !== -1 && newIndex !== -1) {
-        const newSkills = arrayMove(resume.skills, oldIndex, newIndex);
-        setResume({ ...resume, skills: newSkills });
+        move(oldIndex, newIndex);
       }
     }
   };
@@ -40,16 +41,20 @@ export const SkillsForm = () => {
       <h2 className="text-xl font-bold">Skills</h2>
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext
-          items={resume.skills.map((_, idx) => idx.toString())}
+          items={fields.map((_, idx) => idx.toString())}
           strategy={verticalListSortingStrategy}
         >
           <div className="grid gap-2">
-            {resume.skills.map((skill, idx) => (
+            {fields.map((skill, idx) => (
               <SortableSkillItem
-                key={skill.name}
+                key={skill.id}
                 id={idx.toString()}
                 value={skill.name}
-                onChange={value => handleSkillChange(idx, value)}
+                onChange={(value) => {
+                  const newSkills = [...fields];
+                  newSkills[idx] = { ...newSkills[idx], name: value };
+                  form.setValue("skills", newSkills);
+                }}
                 onRemove={() => removeSkill(idx)}
               />
             ))}
@@ -59,4 +64,4 @@ export const SkillsForm = () => {
       </DndContext>
     </section>
   );
-} 
+}; 

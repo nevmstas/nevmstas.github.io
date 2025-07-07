@@ -10,6 +10,6 @@ export const GenerateCVButton = (props: Props) => (
     {...props}
   >
     <Terminal className="mr-2 h-4 w-4" />
-    Generate CV
+    CV Preview
   </Button>
 );

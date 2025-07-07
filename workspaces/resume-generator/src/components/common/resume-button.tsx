@@ -2,10 +2,13 @@
 
 import { HarvardResume, useResume } from "@nevmstas/resume";
 import { GenerateCVButton } from "./generate-cv-button";
-import { useResume as useResumeContext } from "../../context/ResumeContext";
+import { ResumeQuery } from "@nevmstas/hygraph-client";
 
-export const ResumeButton = () => {
-  const { resume } = useResumeContext()
+interface ResumeButtonProps {
+  resume: ResumeQuery;
+}
+
+export const ResumeButton = ({ resume }: ResumeButtonProps) => {
   const { openResume } = useResume(HarvardResume, resume);
 
   return (
