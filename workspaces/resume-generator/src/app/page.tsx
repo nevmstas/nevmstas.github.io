@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { ResumeQuery } from "@nevmstas/hygraph-client";
 import { Button } from "@/components/ui/button";
 import { resumeDB } from "@/db/resume-db";
+import { CoverLetterForm } from "@/components/widgets/cover-letter-form/cover-letter-form";
 
 export default function Home() {
   const [resume, setResume] = useState<ResumeQuery | null>(null);
+  const [coverLetter, setCoverLetter] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false);
 
   // Load resume from API (your own resume)
@@ -29,10 +31,9 @@ export default function Home() {
     try {
       const resume = await resumeDB.generatedResumes.get('latest');
 
-      console.log({indexdb: resume?.data})
-      
       if (resume) {
-        setResume(resume?.data.resume);
+        setResume(resume.data.resume);
+        setCoverLetter(resume.data.coverLetter)
       } else {
         setResume(null);
       }
@@ -60,6 +61,8 @@ export default function Home() {
           Load Generated Resume
         </Button>
       </div>
+
+      <CoverLetterForm value={coverLetter} onChange={setCoverLetter} />
       <ResumeForm resume={resume} />
     </div>
   );
