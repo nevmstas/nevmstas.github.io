@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Resume Generator
+
+✨ Welcome to the Resume Generator! ✨
+
+This is a Next.js app designed to make resume and cover letter creation a breeze. Whether you're job hunting, updating your CV, or just want to see what AI can do for your career, you're in the right place.
+
+## Features
+
+- 📝 Create, edit, and manage your resumes with a beautiful UI
+- 🤖 Generate cover letters with the help of AI
+- 💾 Save your work locally — your data stays with you
+- 📤 Export your resume in multiple formats
 
 ## Getting Started
 
-First, run the development server:
+Ready to try it out? Just run:
 
 ```bash
-npm run dev
-# or
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/` — App routes and pages
+- `src/components/` — All the UI pieces
+- `src/db/` — Local storage and IndexedDB logic
+- `src/openai/` — AI prompt and integration magic
+- `src/schema/` — TypeScript types and validation
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Deploy to [Vercel](https://vercel.com/) or your favorite platform in just a few clicks.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you have feedback, ideas, or just want to say hi, don't hesitate to reach out. Happy resume building! 🚀
