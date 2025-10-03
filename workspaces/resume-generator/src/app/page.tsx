@@ -7,6 +7,7 @@ import { ResumeQuery } from "@nevmstas/hygraph-client";
 import { Button } from "@/components/ui/button";
 import { resumeDB } from "@/db/resume-db";
 import { CoverLetterForm } from "@/components/widgets/cover-letter-form/cover-letter-form";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const [resume, setResume] = useState<ResumeQuery | null>(null);
@@ -35,7 +36,8 @@ export default function Home() {
         setResume(resume.data.resume);
         setCoverLetter(resume.data.coverLetter)
       } else {
-        setResume(null);
+        const apiResume = await client.Resume();
+        setResume(apiResume);
       }
     } catch (error) {
       console.error('Error loading resume from localStorage:', error);
@@ -43,27 +45,29 @@ export default function Home() {
     }
     setLoading(false);
   };
-  
-  useEffect(() => {
-    fetchFromAPI();
-  }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (!resume) return <div>Error loading resume data</div>;
+  useEffect(() => {
+    fetchFromIndexDbStorage();
+  }, []);
 
   return (
     <div className="container mx-auto p-8 space-y-8">
-      <div className="flex gap-4 mb-4">
+      {loading && <>
+        <Skeleton className="h-[30px] w-full rounded-md" />
+        <Skeleton className="h-[100px] w-full rounded-md" />
+        <Skeleton className="h-[500px] w-full rounded-md" />
+      </>}
+      {resume && <><div className="flex gap-4 mb-4 justify-center">
         <Button onClick={fetchFromAPI} className="cursor-pointer" variant="default">
           Load My Resume
         </Button>
         <Button onClick={fetchFromIndexDbStorage} className="cursor-pointer" variant="secondary">
-          Load Generated Resume
+          Load Last Generated Resume
         </Button>
       </div>
 
-      <CoverLetterForm value={coverLetter} onChange={setCoverLetter} />
-      <ResumeForm resume={resume} />
+        <CoverLetterForm value={coverLetter} onChange={setCoverLetter} />
+        <ResumeForm resume={resume} /></>}
     </div>
   );
 }

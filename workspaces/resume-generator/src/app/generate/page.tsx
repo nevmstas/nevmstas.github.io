@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,7 @@ import gqlClient from "@/gql-client";
 import { resumeDB } from "@/db/resume-db";
 
 const GenerateResumeForm = () => {
+  const router = useRouter();
   const [jobDescription, setJobDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,6 +91,7 @@ const GenerateResumeForm = () => {
   const handleNext = async () => {
     if (generatedResume) {
       await resumeDB.generatedResumes.put({ id: 'latest', data: generatedResume });
+      router.push('/');
     }
   };
 
@@ -156,7 +159,7 @@ const GenerateResumeForm = () => {
                 className="px-8"
                 variant="default"
               >
-                Next
+                Show Generated Resume
               </Button>
             )}
           </div>

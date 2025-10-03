@@ -23,7 +23,7 @@ export const prompt = async (
       },
       {
         role: "system",
-        content: `You're given the following job description ${jobDescription} and resume data ${JSON.stringify(
+        content: `You're given the following job description: ${jobDescription} and resume data ${JSON.stringify(
           resume
         )}`,
       },

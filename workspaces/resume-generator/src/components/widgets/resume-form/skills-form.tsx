@@ -36,6 +36,9 @@ export const SkillsForm = ({ form }: SkillsFormProps) => {
     }
   };
 
+  const handleInputChange = (value: string, idx: number) => {
+    form.setValue(`skills.${idx}.name`, value, {shouldDirty: true, shouldTouch: true});
+  }
   return (
     <section className="space-y-4">
       <h2 className="text-xl font-bold">Skills</h2>
@@ -49,12 +52,8 @@ export const SkillsForm = ({ form }: SkillsFormProps) => {
               <SortableSkillItem
                 key={skill.id}
                 id={idx.toString()}
-                value={skill.name}
-                onChange={(value) => {
-                  const newSkills = [...fields];
-                  newSkills[idx] = { ...newSkills[idx], name: value };
-                  form.setValue("skills", newSkills);
-                }}
+                value={form.getValues(`skills.${idx}.name`)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e.target.value, idx)}
                 onRemove={() => removeSkill(idx)}
               />
             ))}

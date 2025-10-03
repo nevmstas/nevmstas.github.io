@@ -6,6 +6,7 @@ import { SkillsForm } from "./skills-form";
 import { ExperiencesForm } from "./experiences-form";
 import { EducationForm } from "./education-form";
 import { ResumeButton } from "@/components/common/resume-button";
+import { useEffect } from "react";
 
 interface ResumeFormProps {
   resume: ResumeQuery;
@@ -15,6 +16,11 @@ export const ResumeForm = ({ resume }: ResumeFormProps) => {
   const form = useForm<ResumeQuery>({
     defaultValues: resume,
   });
+
+  // Reset form when resume data changes
+  useEffect(() => {
+    form.reset(resume);
+  }, [resume, form]);
 
   const currentFormData = form.watch();
 

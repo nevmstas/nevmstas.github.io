@@ -11,6 +11,8 @@ export const getCoverLetterMessage = (): ChatCompletionMessageParam => {
 - Strategically uses 1-2 emoji to add personality
 - Focuses on connection over formality
 - Avoids complex punctuation (max 1-2 commas, no dashes)
-- Ends with energy and enthusiasm`,
+- Ends with energy and enthusiasm
+- Write a summary paragraph for a cover letter that highlights my most relevant experience and connects it to this job description
+- Optimize for ATS`,
   };
 };

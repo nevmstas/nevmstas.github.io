@@ -35,13 +35,8 @@ export const EducationForm = ({ form }: EducationFormProps) => {
   const handleAchievementsChange = (idx: number, value: string) => {
     const achievementsArray = value 
       ? value.split('\n').filter(line => line.trim() !== '') 
-      : [''];
-    
-    // Ensure we always have at least one item
-    if (achievementsArray.length === 0) {
-      achievementsArray.push('');
-    }
-    
+      : [];
+
     form.setValue(`educations.${idx}.achievements`, achievementsArray);
   };
 

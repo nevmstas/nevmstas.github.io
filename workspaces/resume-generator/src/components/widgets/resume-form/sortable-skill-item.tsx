@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 interface SortableSkillItemProps {
   id: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: () => void;
 }
 
@@ -43,7 +43,7 @@ export function SortableSkillItem({ id, value, onChange, onRemove }: SortableSki
       </span>
       <Input
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={onChange}
         placeholder="Skill"
         className="bg-black text-white border-white focus-visible:border-white focus-visible:ring-white/50"
       />
