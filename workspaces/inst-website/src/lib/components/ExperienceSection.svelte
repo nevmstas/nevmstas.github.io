@@ -7,6 +7,7 @@
 		startDate?: any;
 		endDate?: any;
 		skills?: Array<{ name: string }> | null;
+		companyLogo?: { url: string; id: string } | null;
 	}
 
 	interface Props {
@@ -25,88 +26,58 @@
 		}
 		return [];
 	}
+
+	function formatDate(date: any): string {
+		if (!date) return '';
+		try {
+			const d = new Date(date);
+			return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+		} catch {
+			return '';
+		}
+	}
+
+	function getPeriod(experience: Experience): string {
+		const start = formatDate(experience.startDate);
+		const end = experience.endDate ? formatDate(experience.endDate) : 'Present';
+		if (!start) return '';
+		return `${start} - ${end}`;
+	}
 </script>
 
-<section id="experience" class="content-section">
+<section id="experience" class="w-full">
 	{#each experiences as experience}
 		{#if experience.jobTitile && experience.company}
-			<article class="content-block">
-				<h2 class="block-title">{experience.jobTitile} @ {experience.company}</h2>
+			<article class="py-5 px-4 first:pt-6">
+				<div class="flex items-center gap-3 mb-3">
+					{#if experience.companyLogo?.url}
+						<img
+							src={experience.companyLogo.url}
+							alt={experience.company || 'Company logo'}
+							class="w-10 h-10 rounded-full object-cover shrink-0"
+						/>
+					{/if}
+					<h2 class="text-lg font-semibold text-gray-50 leading-snug">{experience.jobTitile} @ {experience.company}</h2>
+				</div>
 				{#if getBulletPoints(experience).length > 0}
-					<ul class="block-bullets">
+					<ul class="list-none p-0 m-0 mb-3">
 						{#each getBulletPoints(experience) as bullet}
-							<li class="bullet-item">{bullet}</li>
+							<li class="text-sm leading-relaxed text-gray-400 mb-2 pl-5 relative before:content-['•'] before:text-gray-50 before:font-semibold before:mr-2">{bullet}</li>
 						{/each}
 					</ul>
 				{/if}
 				{#if getSkills(experience).length > 0}
-					<div class="block-skills">
+					<div class="flex flex-wrap gap-2 mt-3">
 						{#each getSkills(experience) as skill}
-							<span class="skill-tag">#{skill}</span>
+							<span class="text-xs text-gray-50 font-medium tracking-wide">#{skill}</span>
 						{/each}
 					</div>
+				{/if}
+				{#if getPeriod(experience)}
+					<div class="text-xs text-gray-400 mt-2">{getPeriod(experience)}</div>
 				{/if}
 			</article>
 		{/if}
 	{/each}
 </section>
-
-<style>
-	.content-section {
-		width: 100%;
-	}
-
-	.content-block {
-		padding: 1.25rem 1rem;
-	}
-
-	.content-block:first-child {
-		padding-top: 1.5rem;
-	}
-
-	.block-title {
-		font-size: 1.125rem;
-		font-weight: 600;
-		margin-bottom: 0.75rem;
-		color: var(--text-primary);
-		line-height: 1.4;
-	}
-
-	.block-bullets {
-		list-style: none;
-		padding: 0;
-		margin: 0 0 0.75rem 0;
-	}
-
-	.bullet-item {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: var(--text-secondary);
-		margin-bottom: 0.5rem;
-		padding-left: 1.25rem;
-		position: relative;
-	}
-
-	.bullet-item::before {
-		content: '•';
-		position: absolute;
-		left: 0;
-		color: var(--text-primary);
-		font-weight: 600;
-	}
-
-	.block-skills {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-top: 0.75rem;
-	}
-
-	.skill-tag {
-		font-size: 0.8125rem;
-		color: var(--text-primary);
-		font-weight: 500;
-		letter-spacing: 0.3px;
-	}
-</style>
 

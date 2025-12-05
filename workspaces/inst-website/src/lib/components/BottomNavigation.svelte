@@ -32,13 +32,13 @@
 	}
 </script>
 
-<nav class="bottom-nav">
-	<div class="bottom-nav-content">
+<nav class="fixed bottom-0 left-0 right-0 bg-black z-10 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] h-[60px] w-full flex justify-center">
+	<div class="max-w-[430px] mx-auto flex justify-around items-center h-full w-full">
 		{#each tabs as tab}
 			{@const Icon = tab.Icon}
 			<button
-				class="nav-item"
-				class:active={activeTab === tab.id}
+				class="flex items-center justify-center bg-transparent border-none cursor-pointer text-gray-400 p-3 transition-colors duration-200 flex-1 min-h-11 [-webkit-tap-highlight-color:transparent] hover:text-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded"
+				class:text-gray-50={activeTab === tab.id}
 				onclick={() => {
 					if (tab.id === 'home' || tab.id === 'profile') {
 						const content = document.getElementById('content');
@@ -56,57 +56,4 @@
 		{/each}
 	</div>
 </nav>
-
-<style>
-	.bottom-nav {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background-color: var(--bg-primary);
-		z-index: 100;
-		padding: 0.75rem 0;
-		padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-		height: 60px;
-		min-height: calc(60px + env(safe-area-inset-bottom));
-	}
-
-	.bottom-nav-content {
-		max-width: 430px;
-		margin: 0 auto;
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		height: 100%;
-	}
-
-	.nav-item {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: none;
-		border: none;
-		cursor: pointer;
-		color: var(--text-secondary);
-		padding: 0.75rem;
-		transition: color 0.2s ease;
-		flex: 1;
-		min-height: 44px; /* Minimum touch target size for mobile */
-		-webkit-tap-highlight-color: transparent;
-	}
-
-	.nav-item:hover {
-		color: var(--text-primary);
-	}
-
-	.nav-item.active {
-		color: var(--text-primary);
-	}
-
-	.nav-item:focus-visible {
-		outline: 2px solid var(--text-primary);
-		outline-offset: 2px;
-		border-radius: 4px;
-	}
-</style>
 

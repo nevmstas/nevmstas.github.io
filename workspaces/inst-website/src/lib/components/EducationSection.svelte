@@ -28,7 +28,7 @@
 	}
 </script>
 
-<section id="education" class="content-section">
+<section id="education" class="w-full">
 	{#each educations as education}
 		{#if education.degree}
 			<ContentBlock
@@ -39,10 +39,4 @@
 		{/if}
 	{/each}
 </section>
-
-<style>
-	.content-section {
-		width: 100%;
-	}
-</style>
 

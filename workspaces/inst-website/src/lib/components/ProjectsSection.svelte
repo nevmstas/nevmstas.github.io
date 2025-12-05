@@ -1,11 +1,12 @@
 <script lang="ts">
-	import ContentBlock from './ContentBlock.svelte';
-
 	interface Project {
 		id: string;
-		title: string;
-		description: string;
-		skills?: string[];
+		name: string;
+		description?: string | null;
+		website?: string | null;
+		githubLink?: string | null;
+		skills?: Array<{ name: string }> | null;
+		icon?: { url: string } | null;
 	}
 
 	interface Props {
@@ -13,47 +14,67 @@
 	}
 
 	let { projects = [] }: Props = $props();
+
+	function getSkills(project: Project): string[] {
+		return project.skills?.map((s) => s.name.toLowerCase()) || [];
+	}
 </script>
 
-<section id="projects" class="content-section">
+<section id="projects" class="w-full mt-12">
 	{#if projects.length > 0}
 		{#each projects as project}
-			<ContentBlock
-				title={project.title}
-				description={project.description}
-				skills={project.skills || []}
-			/>
+			<article class="py-5 px-4 first:pt-6">
+				<div class="flex items-center gap-3 mb-3">
+					{#if project.icon?.url}
+						<img
+							src={project.icon.url}
+							alt={project.name || 'Project icon'}
+							class="w-10 h-10 rounded-full object-cover shrink-0"
+						/>
+					{/if}
+					<h2 class="text-lg font-semibold text-gray-50 leading-snug">{project.name}</h2>
+				</div>
+				{#if project.description}
+					<p class="text-sm leading-relaxed text-gray-400 mb-3 whitespace-pre-line">{project.description}</p>
+				{/if}
+				{#if getSkills(project).length > 0}
+					<div class="flex flex-wrap gap-2 mt-3">
+						{#each getSkills(project) as skill}
+							<span class="text-xs text-gray-50 font-medium tracking-wide">#{skill}</span>
+						{/each}
+					</div>
+				{/if}
+				{#if project.website || project.githubLink}
+					<div class="flex flex-wrap gap-3 mt-3">
+						{#if project.website}
+							<a
+								href={project.website}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-xs text-gray-400 hover:text-gray-50 underline"
+							>
+								Website
+							</a>
+						{/if}
+						{#if project.githubLink}
+							<a
+								href={project.githubLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-xs text-gray-400 hover:text-gray-50 underline"
+							>
+								GitHub
+							</a>
+						{/if}
+					</div>
+				{/if}
+			</article>
 		{/each}
 	{:else}
-		<article class="content-block">
-			<h2 class="block-title">Projects</h2>
-			<p class="block-description">Projects section coming soon...</p>
+		<article class="py-6 px-4">
+			<h2 class="text-lg font-semibold mb-2 text-gray-50 leading-snug">Projects</h2>
+			<p class="text-sm leading-relaxed text-gray-400 mb-3">Projects section coming soon...</p>
 		</article>
 	{/if}
 </section>
-
-<style>
-	.content-section {
-		width: 100%;
-	}
-
-	.content-block {
-		padding: 1.5rem 1rem;
-	}
-
-	.block-title {
-		font-size: 1.125rem;
-		font-weight: 600;
-		margin-bottom: 0.5rem;
-		color: var(--text-primary);
-		line-height: 1.4;
-	}
-
-	.block-description {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: var(--text-secondary);
-		margin-bottom: 0.75rem;
-	}
-</style>
 

@@ -8,54 +8,15 @@
 	let { title, description, skills = [] }: Props = $props();
 </script>
 
-<article class="content-block">
-	<h2 class="block-title">{title}</h2>
-	<p class="block-description">{description}</p>
+<article class="py-5 px-4 first:pt-6">
+	<h2 class="text-lg font-semibold mb-2 text-gray-50 leading-snug">{title}</h2>
+	<p class="text-sm leading-relaxed text-gray-400 mb-3 whitespace-pre-line">{description}</p>
 	{#if skills.length > 0}
-		<div class="block-skills">
+		<div class="flex flex-wrap gap-2 mt-3">
 			{#each skills as skill}
-				<span class="skill-tag">#{skill}</span>
+				<span class="text-xs text-gray-50 font-medium tracking-wide">#{skill}</span>
 			{/each}
 		</div>
 	{/if}
 </article>
-
-<style>
-	.content-block {
-		padding: 1.25rem 1rem;
-	}
-
-	.content-block:first-child {
-		padding-top: 1.5rem;
-	}
-
-	.block-title {
-		font-size: 1.125rem;
-		font-weight: 600;
-		margin-bottom: 0.5rem;
-		color: var(--text-primary);
-		line-height: 1.4;
-	}
-
-	.block-description {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: var(--text-secondary);
-		margin-bottom: 0.75rem;
-	}
-
-	.block-skills {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-top: 0.75rem;
-	}
-
-	.skill-tag {
-		font-size: 0.8125rem;
-		color: var(--text-primary);
-		font-weight: 500;
-		letter-spacing: 0.3px;
-	}
-</style>
 

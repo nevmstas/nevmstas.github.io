@@ -1,0 +1,15 @@
+query Project {
+  projects {
+    id
+    name
+    skills {
+      name
+    }
+    description
+    website
+    githubLink
+    icon {
+      url
+    }
+  }
+}

@@ -22,10 +22,6 @@ query Resume {
     jobTitile
     location
     description
-    companyImage {
-      url
-      id
-    }
     skills {
       name
     }

@@ -7,7 +7,7 @@ query Experiences {
     jobTitile
     location
     description
-    companyImage {
+    companyLogo {
       url
       id
     }
