@@ -27,7 +27,7 @@
 
 	<main
 		id="content"
-		class="flex-1 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [-webkit-scrollbar-width:none] [-webkit-overflow-scrolling:touch] [scroll-behavior:smooth]"
+		class="flex-1 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [-webkit-scrollbar-width:none] [-webkit-overflow-scrolling:touch] scroll-smooth"
 	>
 		<div class="flex flex-col justify-start items-center *:max-w-[430px]">
 			<AboutMeSection aboutMe={profile.aboutMe} />

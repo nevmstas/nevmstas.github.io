@@ -55,7 +55,7 @@
 		<div class="flex items-center gap-3 flex-wrap">
 			{#if github}
 			<a
-				href={github}
+				href={`https://github.com/${github}`}
 				target="_blank"
 				rel="noopener noreferrer"
 				class="flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded"
@@ -66,7 +66,7 @@
 		{/if}
 			{#if linkedIn}
 			<a
-				href={linkedIn}
+				href={`https://www.linkedin.com/${linkedIn}`}
 				target="_blank"
 				rel="noopener noreferrer"
 				class="flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded"

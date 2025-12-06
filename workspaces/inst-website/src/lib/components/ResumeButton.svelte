@@ -20,7 +20,7 @@
 <button
 	type="button"
 	onclick={handleClick}
-	class="flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded cursor-pointer"
+	class="flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded cursor-pointer"
 	aria-label="Resume"
 >
 	<FileUser size={20} />
