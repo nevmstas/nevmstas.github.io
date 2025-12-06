@@ -2393,6 +2393,8 @@ __metadata:
     "@sveltejs/kit": "npm:^2.48.5"
     "@sveltejs/vite-plugin-svelte": "npm:^6.2.1"
     "@tailwindcss/vite": "npm:^4.1.17"
+    "@types/react": "npm:^19.1.4"
+    react: "npm:^19.1.0"
     svelte: "npm:^5.43.8"
     svelte-check: "npm:^4.3.4"
     tailwindcss: "npm:^4.1.17"

@@ -4,3 +4,4 @@ export { default as HarvardResume } from "./components/harvard/resume/Resume";
 export { renderToFile } from "@react-pdf/renderer";
 
 export { useResume } from "./hooks";
+export { generateAndOpenPdf } from "./utils/open-pdf";

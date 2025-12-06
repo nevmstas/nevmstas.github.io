@@ -46,6 +46,7 @@
 </script>
 
 <section id="experience" class="w-full">
+	<h2 class="text-lg font-semibold mb-2 text-gray-50 leading-snug px-4 pt-6">Experience</h2>
 	{#each experiences as experience}
 		{#if experience.jobTitile && experience.company}
 			<article class="py-5 px-4 first:pt-6">
@@ -54,7 +55,7 @@
 						<img
 							src={experience.companyLogo.url}
 							alt={experience.company || 'Company logo'}
-							class="w-10 h-10 rounded-full object-cover shrink-0"
+							class="w-10 h-10 rounded-full object-cover shrink-0 border-2 border-gray-400"
 						/>
 					{/if}
 					<h2 class="text-lg font-semibold text-gray-50 leading-snug">{experience.jobTitile} @ {experience.company}</h2>
