@@ -1,30 +1,38 @@
-# Website
+# sv
 
-🌐 Welcome to my personal website and portfolio!
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-This site is built with Next.js and showcases my work, skills, and projects. It's a place for me to share what I'm passionate about and connect with others.
+## Creating a project
 
-## Getting Started
+If you're seeing this, you've probably already done this step. Congrats!
 
-To run the site locally:
+```sh
+# create a new project in the current directory
+npx sv create
 
-```bash
-yarn install
-yarn dev
+# create a new project in my-app
+npx sv create my-app
 ```
 
-Then visit [http://localhost:3000](http://localhost:3000) to see it in action.
+## Developing
 
-## Project Structure
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-- `src/app/` — Pages and routes
-- `src/components/` — UI sections and widgets
-- `src/gql-client/` — GraphQL client for fetching data
+```sh
+npm run dev
 
-## Deployment
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-Deploying is a breeze with [Vercel](https://vercel.com/) or your platform of choice.
+## Building
 
----
+To create a production version of your app:
 
-Thanks for visiting! If you spot a typo or have a suggestion, feel free to open an issue or PR. 😊
+```sh
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Header = ({ name, contactEmail, linkedIn, github }: ResumeQuery['profiles'][0]) => {
+const Header = ({ name, contactEmail, linkedIn, github, website }: ResumeQuery['profiles'][0]) => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerTitle}>{name}</Text>
@@ -49,6 +49,13 @@ const Header = ({ name, contactEmail, linkedIn, github }: ResumeQuery['profiles'
           style={styles.contact}
         >
           {`github.com/${github}`}
+        </Link>
+        <Text style={styles.divider}>•</Text>
+        <Link
+          src={`${website}`}
+          style={styles.contact}
+        >
+          website
         </Link>
         <Text style={styles.divider}>•</Text>
         <Link src={`tel:+996550046336`} style={styles.contact}>

@@ -4158,6 +4158,7 @@ export type Profile = Entity & Node & {
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
+  website?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -4238,6 +4239,7 @@ export type ProfileCreateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProfileCreateManyInlineInput = {
@@ -4461,6 +4463,25 @@ export type ProfileManyWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
+  website?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  website_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  website_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  website_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  website_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  website_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  website_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  website_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  website_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  website_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ProfileOrderByInput {
@@ -4483,7 +4504,9 @@ export enum ProfileOrderByInput {
   RoleAsc = 'role_ASC',
   RoleDesc = 'role_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC'
+  UpdatedAtDesc = 'updatedAt_DESC',
+  WebsiteAsc = 'website_ASC',
+  WebsiteDesc = 'website_DESC'
 }
 
 export type ProfileUpdateInput = {
@@ -4494,6 +4517,7 @@ export type ProfileUpdateInput = {
   linkedIn?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProfileUpdateManyInlineInput = {
@@ -4767,6 +4791,25 @@ export type ProfileWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
+  website?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  website_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  website_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  website_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  website_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  website_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  website_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  website_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  website_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  website_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
@@ -4788,6 +4831,7 @@ export type ProfileWhereUniqueInput = {
   github?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   linkedIn?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Project = Entity & Node & {
@@ -8098,7 +8142,7 @@ export type ProjectQuery = { __typename?: 'Query', projects: Array<{ __typename?
 export type ResumeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ResumeQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }>, skills: Array<{ __typename?: 'Skill', name: string }>, experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, skills: Array<{ __typename?: 'Skill', name: string }> }>, educations: Array<{ __typename?: 'Education', id: string, period?: string | null, degree?: string | null, institution?: string | null, achievements: Array<string>, specialization?: string | null }>, certifications: Array<{ __typename?: 'Certification', id: string, name?: string | null, issuer?: string | null, date?: any | null, credentialId?: string | null, link?: string | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, website?: string | null, githubLink?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }> };
+export type ResumeQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, website?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }>, skills: Array<{ __typename?: 'Skill', name: string }>, experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, skills: Array<{ __typename?: 'Skill', name: string }> }>, educations: Array<{ __typename?: 'Education', id: string, period?: string | null, degree?: string | null, institution?: string | null, achievements: Array<string>, specialization?: string | null }>, certifications: Array<{ __typename?: 'Certification', id: string, name?: string | null, issuer?: string | null, date?: any | null, credentialId?: string | null, link?: string | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, website?: string | null, githubLink?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }> };
 
 export type SkillTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8204,6 +8248,7 @@ export const ResumeDocument = gql`
     contactEmail
     linkedIn
     github
+    website
   }
   skills(first: 100, orderBy: order_ASC, where: {showOnCv: true}) {
     name

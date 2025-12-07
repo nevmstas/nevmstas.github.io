@@ -10,6 +10,7 @@ query Resume {
     contactEmail
     linkedIn
     github
+    website
   }
   skills(first: 100, orderBy: order_ASC, where: { showOnCv: true }) {
     name
