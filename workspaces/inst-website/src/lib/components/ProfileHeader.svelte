@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Linkedin, Github } from '@lucide/svelte';
-	import ResumeButton from './ResumeButton.svelte';
+	import { Linkedin, Github, FileUser } from '@lucide/svelte';
 	import type { ResumeQuery } from '@nevmstas/hygraph-client';
 
 	interface Props {
@@ -14,7 +13,7 @@
 		resumeData?: ResumeQuery;
 	}
 
-	let {
+		let {
 		name,
 		avatarUrl,
 		yearsOfExperience,
@@ -24,6 +23,13 @@
 		github,
 		resumeData
 	}: Props = $props();
+
+	async function handleResumeClick() {
+		if (resumeData) {
+			const { openResumePdf } = await import('$lib/utils/open-resume-pdf');
+			await openResumePdf(resumeData, false);
+		}
+	}
 </script>
 
 <header class="bg-black z-10 pt-[max(1rem,env(safe-area-inset-top))] flex justify-center">
@@ -40,7 +46,7 @@
 			<div class="flex gap-4">
 				<div class="flex flex-col gap-0.5">
 					<div class="text-s font-bold text-gray-50 leading-tight">{yearsOfExperience}</div>
-					<div class="text-xs text-gray-50  tracking-wide">Years</div>
+					<div class="text-xs text-gray-50  tracking-wide">yrs xp</div>
 				</div>
 				<div class="flex flex-col gap-0.5">
 					<div class="text-s font-bold text-gray-50 leading-tight">{secondStat.value}</div>
@@ -58,10 +64,13 @@
 				href={`https://github.com/${github}`}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded"
+				class="relative flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
 				aria-label="GitHub"
 			>
 				<Github size={20} />
+				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
+					GitHub
+				</span>
 			</a>
 		{/if}
 			{#if linkedIn}
@@ -69,17 +78,32 @@
 				href={`https://www.linkedin.com/${linkedIn}`}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded"
+				class="relative flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
 				aria-label="LinkedIn"
 			>
 				<Linkedin size={20} />
+				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
+					LinkedIn
+				</span>
 			</a>
 		{/if}
 
 			{#if resumeData}
-			<div class="flex items-center gap-2 text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded cursor-pointer">
-				<ResumeButton {resumeData} />
-				<span>download cv</span>
+			<div
+				onclick={handleResumeClick}
+				class="relative flex items-center gap-2 text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded cursor-pointer group"
+				role="button"
+				tabindex="0"
+				onkeydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						handleResumeClick();
+					}
+				}}
+				aria-label="Open CV"
+			>
+				<FileUser size={20} />
+				<span>Open cv</span>
 			</div>
 			{/if}
 

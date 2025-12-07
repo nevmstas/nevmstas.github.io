@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Home, User, Briefcase, GraduationCap, Folder } from '@lucide/svelte';
+	import { House, User, Briefcase, GraduationCap, Folder, Github, HandMetal, Brain } from '@lucide/svelte';
 
 	interface Props {
 		activeTab?: string;
@@ -8,11 +8,11 @@
 	let { activeTab = 'home' }: Props = $props();
 
 	const tabs = [
-		{ id: 'home', Icon: Home, label: 'Home' },
-		{ id: 'experience', Icon: Briefcase, label: 'Experience' },
+		// { id: 'home', Icon: House, label: 'Home' },
+		{ id: 'profile', Icon: HandMetal, label: 'About me' },
+		{ id: 'projects', Icon: Github, label: 'Projects' },
+		{ id: 'experience', Icon: Brain, label: 'Experience' },
 		{ id: 'education', Icon: GraduationCap, label: 'Education' },
-		{ id: 'projects', Icon: Folder, label: 'Projects' },
-		{ id: 'profile', Icon: User, label: 'Profile' }
 	];
 
 	function scrollToSection(sectionId: string) {
@@ -37,7 +37,7 @@
 		{#each tabs as tab}
 			{@const Icon = tab.Icon}
 			<button
-				class="flex items-center justify-center bg-transparent border-none cursor-pointer text-gray-400 p-3 transition-colors duration-200 flex-1 min-h-11 [-webkit-tap-highlight-color:transparent] hover:text-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded"
+				class="relative flex items-center justify-center bg-transparent border-none cursor-pointer text-gray-400 p-3 transition-colors duration-200 flex-1 min-h-11 [-webkit-tap-highlight-color:transparent] hover:text-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
 				class:text-gray-50={activeTab === tab.id}
 				onclick={() => {
 					if (tab.id === 'home' || tab.id === 'profile') {
@@ -52,6 +52,9 @@
 				aria-label={tab.label}
 			>
 				<Icon size={24} />
+				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
+					{tab.label}
+				</span>
 			</button>
 		{/each}
 	</div>

@@ -63,7 +63,7 @@
 				{#if getBulletPoints(experience).length > 0}
 					<ul class="list-none p-0 m-0 mb-3">
 						{#each getBulletPoints(experience) as bullet}
-							<li class="text-sm leading-relaxed text-gray-400 mb-2 pl-5 relative before:content-['•'] before:text-gray-50 before:font-semibold before:mr-2">{bullet}</li>
+							<li class="text-sm leading-relaxed text-gray-400 mb-2 relative before:content-['•'] before:text-gray-50 before:font-semibold before:mr-2">{bullet}</li>
 						{/each}
 					</ul>
 				{/if}

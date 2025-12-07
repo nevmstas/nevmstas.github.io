@@ -18,8 +18,8 @@
 		name={profile.name || 'Your Name'}
 		avatarUrl={profile.avatar?.url || undefined}
 		yearsOfExperience={6}
-		secondStat={{ value: '100k', label: 'impact' }}
-		thirdStat={{ value: '1000k', label: 'features' }}
+		secondStat={{ value: '6666', label: 'coffee cups' }}
+		thirdStat={{ value: '404', label: 'bugs slain' }}
 		linkedIn={profile.linkedIn}
 		github={profile.github}
 		resumeData={resumeData}
