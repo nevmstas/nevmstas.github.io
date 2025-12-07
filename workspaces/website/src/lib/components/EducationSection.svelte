@@ -45,7 +45,7 @@
 					</h2>
 				</div>
 				<p class="text-sm leading-relaxed text-gray-400 mb-3 whitespace-pre-line">
-					{getDescription(education)}
+					{education.institution}
 				</p>
 				{#if education.period}
 					<div class="text-xs text-gray-400 mt-2">{education.period}</div>

@@ -13,7 +13,7 @@
 
 </script>
 
-<div class="relative w-full h-screen overflow-hidden flex flex-col">
+<div class="relative w-full h-dvh overflow-hidden flex flex-col">
 	<ProfileHeader
 		name={profile.name || 'Your Name'}
 		avatarUrl={profile.avatar?.url || undefined}
@@ -29,7 +29,7 @@
 		id="content"
 		class="flex-1 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [-webkit-scrollbar-width:none] [-webkit-overflow-scrolling:touch] scroll-smooth"
 	>
-		<div class="flex flex-col justify-start items-center *:max-w-[430px]">
+		<div class="flex flex-col justify-start items-center *:max-w-[430px] pb-[max(60px,calc(60px+env(safe-area-inset-bottom)))]">
 			<AboutMeSection aboutMe={profile.aboutMe} />
 			<ProjectsSection projects={projects || []} />
 			<ExperienceSection {experiences} />

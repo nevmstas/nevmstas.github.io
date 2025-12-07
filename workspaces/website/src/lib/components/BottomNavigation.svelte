@@ -17,22 +17,18 @@
 
 	function scrollToSection(sectionId: string) {
 		const element = document.getElementById(sectionId);
-		if (element) {
-			// Get the scrollable container
-			const scrollContainer = element.closest('.scrollable-content');
-			if (scrollContainer) {
-				const containerTop = scrollContainer.getBoundingClientRect().top;
-				const elementTop = element.getBoundingClientRect().top;
-				const offset = elementTop - containerTop - 20; // 20px offset from top
-				scrollContainer.scrollBy({ top: offset, behavior: 'smooth' });
-			} else {
-				element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}
+		const content = document.getElementById('content');
+		if (element && content) {
+			// Get the scrollable container (content element)
+			const containerTop = content.getBoundingClientRect().top;
+			const elementTop = element.getBoundingClientRect().top;
+			const offset = elementTop - containerTop - 20; // 20px offset from top
+			content.scrollBy({ top: offset, behavior: 'smooth' });
 		}
 	}
 </script>
 
-<nav class="bg-black z-10 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] h-[60px] w-full flex justify-center">
+<nav class="fixed bottom-0 left-0 right-0 bg-black z-10 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] h-[60px] w-full flex justify-center">
 	<div class="max-w-[430px] mx-auto flex justify-around items-center h-full w-full">
 		{#each tabs as tab}
 			{@const Icon = tab.Icon}
