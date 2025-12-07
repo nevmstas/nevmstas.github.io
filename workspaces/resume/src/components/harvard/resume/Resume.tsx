@@ -5,6 +5,7 @@ import { ResumeQuery } from '@nevmstas/hygraph-client'
 import { Skills } from '../skills'
 import sharedStyles from '../styles'
 import ResumeItem from '../resume-item/ResumeItem'
+import ProjectItem from '../project-item/ProjectItem'
 import { Header } from '../header'
 
 const styles = StyleSheet.create({
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   section: {
-    marginBottom: 6,
+    marginBottom: 2,
   },
   sectionTitle: {
     color: theme.colors.dark3,
@@ -50,6 +51,7 @@ const HarvardResume = ({
   skills,
   experiences,
   educations,
+  projects,
 }: ResumeQuery) => {
   const profile = profiles[0]
   return (
@@ -67,6 +69,26 @@ const HarvardResume = ({
             <Text style={styles.sectionTitle}>Skills</Text>
             <Skills skills={skills} style={sharedStyles.itemMarginBottom} />
           </View>
+
+          {projects && projects.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Projects</Text>
+              {projects.map((project, index) => (
+                <ProjectItem
+                  key={project.id}
+                  title={project.name}
+                  website={project.website}
+                  githubLink={project.githubLink}
+                  description={project.description}
+                  style={getItemMarginStyle(
+                    sharedStyles.itemMarginBottom,
+                    index,
+                    projects.length,
+                  )}
+                />
+              ))}
+            </View>
+          )}
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Work Experience</Text>

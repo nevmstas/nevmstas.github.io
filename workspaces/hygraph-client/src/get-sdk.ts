@@ -8098,7 +8098,7 @@ export type ProjectQuery = { __typename?: 'Query', projects: Array<{ __typename?
 export type ResumeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ResumeQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }>, skills: Array<{ __typename?: 'Skill', name: string }>, experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, skills: Array<{ __typename?: 'Skill', name: string }> }>, educations: Array<{ __typename?: 'Education', id: string, period?: string | null, degree?: string | null, institution?: string | null, achievements: Array<string>, specialization?: string | null }>, certifications: Array<{ __typename?: 'Certification', id: string, name?: string | null, issuer?: string | null, date?: any | null, credentialId?: string | null, link?: string | null }> };
+export type ResumeQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }>, skills: Array<{ __typename?: 'Skill', name: string }>, experiences: Array<{ __typename?: 'Experience', id: string, company?: string | null, startDate?: any | null, endDate?: any | null, jobTitile?: string | null, location?: string | null, description: Array<string>, skills: Array<{ __typename?: 'Skill', name: string }> }>, educations: Array<{ __typename?: 'Education', id: string, period?: string | null, degree?: string | null, institution?: string | null, achievements: Array<string>, specialization?: string | null }>, certifications: Array<{ __typename?: 'Certification', id: string, name?: string | null, issuer?: string | null, date?: any | null, credentialId?: string | null, link?: string | null }>, projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, website?: string | null, githubLink?: string | null, skills: Array<{ __typename?: 'Skill', name: string }> }> };
 
 export type SkillTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8235,6 +8235,16 @@ export const ResumeDocument = gql`
     date
     credentialId
     link
+  }
+  projects {
+    id
+    name
+    description
+    website
+    githubLink
+    skills {
+      name
+    }
   }
 }
     `;

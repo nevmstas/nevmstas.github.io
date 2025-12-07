@@ -48,7 +48,7 @@ const Header = ({ name, contactEmail, linkedIn, github }: ResumeQuery['profiles'
           src={`https://www.github.com/${github}`}
           style={styles.contact}
         >
-          {github}
+          {`github.com/${github}`}
         </Link>
         <Text style={styles.divider}>•</Text>
         <Link src={`tel:+996550046336`} style={styles.contact}>

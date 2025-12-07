@@ -42,4 +42,14 @@ query Resume {
     credentialId
     link
   }
+  projects {
+    id
+    name
+    description
+    website
+    githubLink
+    skills {
+      name
+    }
+  }
 }
