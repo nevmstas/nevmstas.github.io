@@ -14,8 +14,8 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     env:
-      NEXT_PUBLIC_HYGRAPH_URL: ${{ vars.HYGRAPH_URL }}
-      NEXT_PUBLIC_HYGRAPH_TOKEN: ${{ vars.HYGRAPH_TOKEN }}
+      PUBLIC_HYGRAPH_URL: ${{ vars.HYGRAPH_URL }}
+      PUBLIC_HYGRAPH_TOKEN: ${{ vars.HYGRAPH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +32,7 @@ jobs:
         run: yarn
 
       - name: Build
-        run: yarn workspace @nevmstas/website build
+        run: yarn workspace @nevmstas/inst-website build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -40,4 +40,4 @@ jobs:
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./workspaces/website/out
+          publish_dir: ./workspaces/inst-website/build

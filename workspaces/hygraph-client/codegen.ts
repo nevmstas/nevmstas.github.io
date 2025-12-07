@@ -9,7 +9,7 @@ if (!process.env.HYGRAPH_URL) {
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.HYGRAPH_URL,
-  documents: path.resolve(__dirname, '../website/documents/*.graphql'),
+  documents: path.resolve(__dirname, '../inst-website/documents/*.graphql'),
   ignoreNoDocuments: true,
   generates: {
     './src/get-sdk.ts': {
