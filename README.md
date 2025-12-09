@@ -5,7 +5,7 @@
 ## What's Inside?
 
 - **resume-generator** — An AI-powered app to help you craft beautiful resumes and cover letters.
-- **website** — My personal website and portfolio, built with love and Next.js.
+- **website** — My personal website and portfolio, built with SvelteKit.
 - **resume** — A library of reusable resume components and types.
 - **hygraph-client** — A handy GraphQL client for fetching and managing resume data from Hygraph (GraphCMS).
 

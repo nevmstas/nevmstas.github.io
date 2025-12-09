@@ -33,7 +33,7 @@
 		{#each tabs as tab}
 			{@const Icon = tab.Icon}
 			<button
-				class="relative flex items-center justify-center bg-transparent border-none cursor-pointer text-gray-400 p-3 transition-colors duration-200 flex-1 min-h-11 [-webkit-tap-highlight-color:transparent] hover:text-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
+				class="relative flex items-center justify-center bg-transparent border-none cursor-pointer text-gray-400 p-3 transition-colors duration-200 flex-1 min-h-11 [-webkit-tap-highlight-color:transparent] hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
 				class:text-gray-50={activeTab === tab.id}
 				onclick={() => {
 					if (tab.id === 'home' || tab.id === 'profile') {
