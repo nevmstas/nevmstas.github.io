@@ -28,8 +28,8 @@
 	}
 </script>
 
-<nav class="fixed bottom-0 left-0 right-0 bg-black z-10 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] h-[60px] w-full flex justify-center">
-	<div class="max-w-[430px] mx-auto flex justify-around items-center h-full w-full">
+<nav class="fixed bottom-0 left-0 right-0 bg-black z-10 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] h-[60px] w-full flex justify-center fade-in-delay-4">
+	<div class="max-w-[440px] mx-auto flex justify-around items-center h-full w-full">
 		{#each tabs as tab}
 			{@const Icon = tab.Icon}
 			<button

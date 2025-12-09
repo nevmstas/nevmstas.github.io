@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Linkedin, Github, FileUser } from '@lucide/svelte';
+	import { Linkedin, Github, FileUser, Mail } from '@lucide/svelte';
 	import type { ResumeQuery } from '@nevmstas/hygraph-client';
 
 	interface Props {
@@ -10,6 +10,7 @@
 		thirdStat: { value: number | string; label: string };
 		linkedIn?: string | null;
 		github?: string | null;
+		email?: string | null;
 		resumeData?: ResumeQuery;
 	}
 
@@ -21,6 +22,7 @@
 		thirdStat,
 		linkedIn,
 		github,
+		email,
 		resumeData
 	}: Props = $props();
 
@@ -32,9 +34,9 @@
 	}
 </script>
 
-<header class="bg-black z-10 pt-[max(1rem,env(safe-area-inset-top))] flex justify-center">
-	<div class="max-w-[430px] mx-auto px-4 flex flex-col gap-3 w-full py-4">
-		<h1 class="text-lg font-semibold m-0 text-gray-50 leading-tight">{name}</h1>
+<header class="bg-black z-10 pt-[max(1rem,env(safe-area-inset-top))] flex justify-center fade-in">
+	<div class="max-w-[440px] mx-auto px-4 flex flex-col gap-3 w-full py-4">
+		<h1 class="text-3xl font-semibold m-0 text-gray-50 leading-tight">{name}</h1>
 		<div class="flex items-center gap-5">
 			<div class="w-20 h-20 shrink-0 rounded-full overflow-hidden bg-gray-900">
 				{#if avatarUrl}
@@ -45,19 +47,21 @@
 			</div>
 			<div class="flex gap-4">
 				<div class="flex flex-col gap-0.5">
-					<div class="text-s font-bold text-gray-50 leading-tight">{yearsOfExperience}</div>
-					<div class="text-xs text-gray-50  tracking-wide">yrs xp</div>
+					<div class="text-base font-bold text-gray-50 leading-tight">{yearsOfExperience}</div>
+					<div class="text-sm text-gray-50  tracking-wide">yrs xp</div>
 				</div>
 				<div class="flex flex-col gap-0.5">
-					<div class="text-s font-bold text-gray-50 leading-tight">{secondStat.value}</div>
-					<div class="text-xs text-gray-50  tracking-wide">{secondStat.label}</div>
+					<div class="text-base font-bold text-gray-50 leading-tight">{secondStat.value}</div>
+					<div class="text-sm text-gray-50  tracking-wide">{secondStat.label}</div>
 				</div>
 				<div class="flex flex-col gap-0.5">
-					<div class="text-s font-bold text-gray-50 leading-tight">{thirdStat.value}</div>
-					<div class="text-xs text-gray-50 tracking-wide">{thirdStat.label}</div>
+					<div class="text-base font-bold text-gray-50 leading-tight">{thirdStat.value}</div>
+					<div class="text-sm text-gray-50 tracking-wide">{thirdStat.label}</div>
 				</div>
 			</div>
 		</div>
+
+		<h2 class="text-xl font-semibold m-0 text-gray-50 leading-tight">Software Engineer.</h2>
 		<div class="flex items-center gap-3 flex-wrap">
 			{#if github}
 			<a
@@ -68,7 +72,7 @@
 				aria-label="GitHub"
 			>
 				<Github size={20} />
-				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
+				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
 					GitHub
 				</span>
 			</a>
@@ -82,8 +86,20 @@
 				aria-label="LinkedIn"
 			>
 				<Linkedin size={20} />
-				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
+				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
 					LinkedIn
+				</span>
+			</a>
+		{/if}
+			{#if email}
+			<a
+				href={`mailto:${email}`}
+				class="relative flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
+				aria-label="Email"
+			>
+				<Mail size={20} />
+				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
+					Email
 				</span>
 			</a>
 		{/if}
@@ -103,7 +119,7 @@
 				aria-label="Open CV"
 			>
 				<FileUser size={20} />
-				<span>Open cv</span>
+				<span class="text-sm">Open cv</span>
 			</div>
 			{/if}
 

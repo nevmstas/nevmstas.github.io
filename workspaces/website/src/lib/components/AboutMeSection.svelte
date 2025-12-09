@@ -9,7 +9,7 @@
 </script>
 
 {#if aboutMe}
-	<section id="about-me" class="w-full">
+	<section id="about-me" class="w-full fade-in-delay-1">
 		<ContentBlock title="About Me" description={aboutMe} skills={[]} />
 	</section>
 {/if}
