@@ -49,12 +49,22 @@ const certificationSchema = z.object({
   link: z.string().nullable().optional(),
 });
 
+const projectSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string().nullable().optional(),
+  website: z.string().nullable().optional(),
+  githubLink: z.string().nullable().optional(),
+  skills: z.array(skillSchema),
+});
+
 const resumeSchema = z.object({
   profiles: z.array(profileSchema),
   skills: z.array(skillSchema),
   experiences: z.array(experienceSchema),
   educations: z.array(educationSchema),
   certifications: z.array(certificationSchema),
+  projects: z.array(projectSchema),
 })
 
 export const generateSchema = z.object({

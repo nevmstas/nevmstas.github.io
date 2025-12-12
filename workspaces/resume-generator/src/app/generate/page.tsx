@@ -77,6 +77,7 @@ const GenerateResumeForm = () => {
       
       try {
         const data = JSON.parse(responseText);
+        console.log('data', JSON.parse(data.aiResponse));
         setGeneratedResume(JSON.parse(data.aiResponse));
       } catch (parseError) {
         console.error('Failed to parse JSON:', parseError);
