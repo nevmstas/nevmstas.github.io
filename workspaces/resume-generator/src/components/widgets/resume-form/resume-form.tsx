@@ -10,9 +10,10 @@ import { useEffect } from "react";
 
 interface ResumeFormProps {
   resume: ResumeQuery;
+  companyName?: string;
 }
 
-export const ResumeForm = ({ resume }: ResumeFormProps) => {
+export const ResumeForm = ({ resume, companyName }: ResumeFormProps) => {
   const form = useForm<ResumeQuery>({
     defaultValues: resume,
   });
@@ -26,7 +27,7 @@ export const ResumeForm = ({ resume }: ResumeFormProps) => {
 
   return (
     <form className="space-y-8">
-      <ResumeButton resume={currentFormData}/>
+      <ResumeButton resume={currentFormData} companyName={companyName} />
       <ProfileForm form={form} />
       <SkillsForm form={form} />
       <ExperiencesForm form={form} />

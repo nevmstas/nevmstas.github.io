@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Home() {
   const [resume, setResume] = useState<ResumeQuery | null>(null);
   const [coverLetter, setCoverLetter] = useState<string>('')
+  const [companyName, setCompanyName] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
 
   // Load resume from API (your own resume)
@@ -20,6 +21,7 @@ export default function Home() {
     try {
       const apiResume = await client.Resume();
       setResume(apiResume);
+      setCompanyName(undefined);
     } catch (error) {
       console.error('Error fetching resume from API:', error);
       setResume(null);
@@ -34,7 +36,8 @@ export default function Home() {
 
       if (resume) {
         setResume(resume.data.resume);
-        setCoverLetter(resume.data.coverLetter)
+        setCoverLetter(resume.data.coverLetter);
+        setCompanyName(resume.data.companyName);
       } else {
         const apiResume = await client.Resume();
         setResume(apiResume);
@@ -67,7 +70,7 @@ export default function Home() {
       </div>
 
         <CoverLetterForm value={coverLetter} onChange={setCoverLetter} />
-        <ResumeForm resume={resume} /></>}
+        <ResumeForm resume={resume} companyName={companyName} /></>}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResumeQuery } from "@nevmstas/hygraph-client";
 import gqlClient from "@/gql-client";
@@ -12,6 +13,7 @@ import { resumeDB } from "@/db/resume-db";
 const GenerateResumeForm = () => {
   const router = useRouter();
   const [jobDescription, setJobDescription] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [loadingCV, setLoadingCV] = useState(false);
   const [loadingCoverLetter, setLoadingCoverLetter] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -157,7 +159,8 @@ const GenerateResumeForm = () => {
         id: 'latest', 
         data: { 
           resume: generatedResume || resume!, 
-          coverLetter: generatedCoverLetter || '' 
+          coverLetter: generatedCoverLetter || '',
+          companyName: companyName.trim() || undefined
         } 
       });
       router.push('/');
@@ -201,6 +204,19 @@ const GenerateResumeForm = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="companyName">Company Name</Label>
+            <Input
+              id="companyName"
+              placeholder="e.g. google, meta, stripe..."
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">
+              Used for the CV filename: stas-nevmyvaka-cv-{companyName || 'company'}
+            </p>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="jobDescription">Job Description</Label>
             <Textarea

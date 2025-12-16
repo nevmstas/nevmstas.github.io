@@ -6,6 +6,7 @@ export interface GeneratedResume {
   data: {
     resume: ResumeQuery
     coverLetter: string
+    companyName?: string
   };
 }
 
@@ -14,7 +15,7 @@ class ResumeDB extends Dexie {
 
   constructor() {
     super('ResumeDB');
-    this.version(1).stores({
+    this.version(2).stores({
       generatedResumes: 'id'
     });
   }

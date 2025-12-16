@@ -8,7 +8,11 @@ export async function generateAndOpenPdf(
   currentPdfUrlRef?: { current: string | undefined }
 ): Promise<void> {
   const blob = await pdf(pdfDocument).toBlob();
-  const url = URL.createObjectURL(blob);
+  const pdfFilename = `${filename}.pdf`;
+  
+  // Create a File object with the proper filename so browser uses it when saving
+  const file = new File([blob], pdfFilename, { type: 'application/pdf' });
+  const fileUrl = URL.createObjectURL(file);
 
   // Revoke the previous URL if exists
   if (currentPdfUrlRef?.current) {
@@ -16,16 +20,17 @@ export async function generateAndOpenPdf(
   }
 
   if (currentPdfUrlRef) {
-    currentPdfUrlRef.current = url;
+    currentPdfUrlRef.current = fileUrl;
   }
 
-  // Open or download the PDF
-  const link = document.createElement('a');
-  link.href = url;
-  link.target = '_blank';
   if (download) {
-    link.download = `${filename}-${Date.now()}.pdf`;
+    // Download mode: trigger download with proper filename
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = pdfFilename;
+    link.click();
+  } else {
+    // Preview mode: open in new tab without download attribute
+    window.open(fileUrl, '_blank');
   }
-  link.click();
 }
-
