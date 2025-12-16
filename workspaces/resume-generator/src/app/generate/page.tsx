@@ -12,9 +12,11 @@ import { resumeDB } from "@/db/resume-db";
 const GenerateResumeForm = () => {
   const router = useRouter();
   const [jobDescription, setJobDescription] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loadingCV, setLoadingCV] = useState(false);
+  const [loadingCoverLetter, setLoadingCoverLetter] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [generatedResume, setGeneratedResume] = useState<{resume: ResumeQuery, coverLetter: string } | null>(null);
+  const [generatedResume, setGeneratedResume] = useState<ResumeQuery | null>(null);
+  const [generatedCoverLetter, setGeneratedCoverLetter] = useState<string | null>(null);
   const [resume, setResume] = useState<ResumeQuery | null>(null);
   const [resumeLoading, setResumeLoading] = useState(true);
 
@@ -35,7 +37,7 @@ const GenerateResumeForm = () => {
     fetchResume();
   }, []);
 
-  const handleGenerate = async () => {
+  const handleGenerateCV = async () => {
     if (!jobDescription.trim()) {
       setError("Please enter a job description");
       return;
@@ -46,11 +48,11 @@ const GenerateResumeForm = () => {
       return;
     }
 
-    setLoading(true);
+    setLoadingCV(true);
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-resume', {
+      const response = await fetch('/api/generate-cv', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ const GenerateResumeForm = () => {
         
         try {
           const errorData = JSON.parse(errorText);
-          throw new Error(errorData.error || 'Failed to generate resume');
+          throw new Error(errorData.error || 'Failed to generate CV');
         } catch {
           throw new Error(`HTTP ${response.status}: ${errorText}`);
         }
@@ -77,21 +79,87 @@ const GenerateResumeForm = () => {
       
       try {
         const data = JSON.parse(responseText);
-        console.log('data', JSON.parse(data.aiResponse));
-        setGeneratedResume(JSON.parse(data.aiResponse));
+        const parsed = JSON.parse(data.aiResponse);
+        console.log('CV data', parsed);
+        setGeneratedResume(parsed.resume);
       } catch (parseError) {
         console.error('Failed to parse JSON:', parseError);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to generate resume. Please try again.");
+      setError(err instanceof Error ? err.message : "Failed to generate CV. Please try again.");
     } finally {
-      setLoading(false);
+      setLoadingCV(false);
     }
   };
 
+  const handleGenerateCoverLetter = async () => {
+    if (!jobDescription.trim()) {
+      setError("Please enter a job description");
+      return;
+    }
+
+    if (!resume) {
+      setError("Resume data not loaded");
+      return;
+    }
+
+    setLoadingCoverLetter(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/generate-cover-letter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jobDescription,
+          resume: resume,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response text:', errorText);
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          throw new Error(errorData.error || 'Failed to generate cover letter');
+        } catch {
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+      }
+
+      const responseText = await response.text();
+      
+      try {
+        const data = JSON.parse(responseText);
+        const parsed = JSON.parse(data.aiResponse);
+        console.log('Cover letter data', parsed);
+        setGeneratedCoverLetter(parsed.coverLetter);
+      } catch (parseError) {
+        console.error('Failed to parse JSON:', parseError);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to generate cover letter. Please try again.");
+    } finally {
+      setLoadingCoverLetter(false);
+    }
+  };
+
+  const handleGenerateBoth = async () => {
+    await Promise.all([handleGenerateCV(), handleGenerateCoverLetter()]);
+  };
+
   const handleNext = async () => {
-    if (generatedResume) {
-      await resumeDB.generatedResumes.put({ id: 'latest', data: generatedResume });
+    if (generatedResume || generatedCoverLetter) {
+      await resumeDB.generatedResumes.put({ 
+        id: 'latest', 
+        data: { 
+          resume: generatedResume || resume!, 
+          coverLetter: generatedCoverLetter || '' 
+        } 
+      });
       router.push('/');
     }
   };
@@ -120,13 +188,16 @@ const GenerateResumeForm = () => {
     );
   }
 
+  const isLoading = loadingCV || loadingCoverLetter;
+  const hasGenerated = generatedResume || generatedCoverLetter;
+
   return (
     <div className="container mx-auto p-8 max-w-4xl">
       <Card>
         <CardHeader>
-          <CardTitle>Generate Resume</CardTitle>
+          <CardTitle>Generate Resume & Cover Letter</CardTitle>
           <CardDescription>
-            Enter a job description and we&apos;ll generate a tailored resume for you.
+            Enter a job description and generate a tailored CV and/or cover letter separately.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -144,23 +215,63 @@ const GenerateResumeForm = () => {
           {error && (
             <div className="text-red-500 text-sm">{error}</div>
           )}
+
+          {/* Generation status indicators */}
+          {(generatedResume || generatedCoverLetter) && (
+            <div className="flex gap-4 flex-wrap">
+              {generatedResume && (
+                <div className="text-green-600 text-sm flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  CV Generated
+                </div>
+              )}
+              {generatedCoverLetter && (
+                <div className="text-green-600 text-sm flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  Cover Letter Generated
+                </div>
+              )}
+            </div>
+          )}
           
-          <div className="flex justify-end gap-4">
+          <div className="flex flex-wrap gap-4">
             <Button 
-              onClick={handleGenerate} 
-              disabled={loading}
-              className="px-8"
+              onClick={handleGenerateCV} 
+              disabled={isLoading}
+              variant="outline"
+              className="px-6"
             >
-              {loading ? "Generating..." : "Generate Resume"}
+              {loadingCV ? "Generating CV..." : "Generate CV Only"}
+            </Button>
+
+            <Button 
+              onClick={handleGenerateCoverLetter} 
+              disabled={isLoading}
+              variant="outline"
+              className="px-6"
+            >
+              {loadingCoverLetter ? "Generating..." : "Generate Cover Letter Only"}
             </Button>
             
-            {generatedResume && (
+            <Button 
+              onClick={handleGenerateBoth} 
+              disabled={isLoading}
+              className="px-6"
+            >
+              {isLoading ? "Generating..." : "Generate Both"}
+            </Button>
+            
+            {hasGenerated && (
               <Button 
                 onClick={handleNext}
-                className="px-8"
+                className="px-6"
                 variant="default"
               >
-                Show Generated Resume
+                View Generated Content
               </Button>
             )}
           </div>
@@ -170,4 +281,4 @@ const GenerateResumeForm = () => {
   );
 };
 
-export default GenerateResumeForm; 
+export default GenerateResumeForm;

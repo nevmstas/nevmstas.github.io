@@ -71,3 +71,13 @@ export const generateSchema = z.object({
   resume: resumeSchema,
   coverLetter: z.string().nullable().optional(),
 });
+
+// Schema for CV-only generation
+export const resumeOnlySchema = z.object({
+  resume: resumeSchema,
+});
+
+// Schema for cover letter-only generation
+export const coverLetterOnlySchema = z.object({
+  coverLetter: z.string(),
+});
