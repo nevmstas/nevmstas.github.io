@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { resumeDB } from "@/db/resume-db";
 import { CoverLetterForm } from "@/components/widgets/cover-letter-form/cover-letter-form";
 import { Skeleton } from "@/components/ui/skeleton";
+import { fetchResume } from "@/services";
 
 export default function Home() {
   const [resume, setResume] = useState<ResumeQuery | null>(null);
@@ -19,7 +20,7 @@ export default function Home() {
   const fetchFromAPI = async () => {
     setLoading(true);
     try {
-      const apiResume = await client.Resume();
+      const apiResume = await fetchResume();
       setResume(apiResume);
       setCompanyName(undefined);
     } catch (error) {

@@ -7,8 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResumeQuery } from "@nevmstas/hygraph-client";
-import gqlClient from "@/gql-client";
 import { resumeDB } from "@/db/resume-db";
+import { fetchResume, generateCV, generateCoverLetter } from "@/services";
 
 const GenerateResumeForm = () => {
   const router = useRouter();
@@ -23,10 +23,10 @@ const GenerateResumeForm = () => {
   const [resumeLoading, setResumeLoading] = useState(true);
 
   useEffect(() => {
-    const fetchResume = async () => {
+    const loadResume = async () => {
       try {
         setResumeLoading(true);
-        const resumeData = await gqlClient.Resume();
+        const resumeData = await fetchResume();
         setResume(resumeData);
       } catch (err) {
         console.error("Error fetching resume:", err);
@@ -36,12 +36,12 @@ const GenerateResumeForm = () => {
       }
     };
 
-    fetchResume();
+    loadResume();
   }, []);
 
   const handleGenerateCV = async () => {
-    if (!jobDescription.trim()) {
-      setError("Please enter a job description");
+    if (!jobDescription.trim() && !companyName.trim()) {
+      setError("Please enter a company name or job description");
       return;
     }
 
@@ -54,39 +54,8 @@ const GenerateResumeForm = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-cv', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          jobDescription,
-          resume: resume,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error response text:', errorText);
-        
-        try {
-          const errorData = JSON.parse(errorText);
-          throw new Error(errorData.error || 'Failed to generate CV');
-        } catch {
-          throw new Error(`HTTP ${response.status}: ${errorText}`);
-        }
-      }
-
-      const responseText = await response.text();
-      
-      try {
-        const data = JSON.parse(responseText);
-        const parsed = JSON.parse(data.aiResponse);
-        console.log('CV data', parsed);
-        setGeneratedResume(parsed.resume);
-      } catch (parseError) {
-        console.error('Failed to parse JSON:', parseError);
-      }
+      const result = await generateCV({ jobDescription, resume });
+      setGeneratedResume(result.resume);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate CV. Please try again.");
     } finally {
@@ -95,8 +64,8 @@ const GenerateResumeForm = () => {
   };
 
   const handleGenerateCoverLetter = async () => {
-    if (!jobDescription.trim()) {
-      setError("Please enter a job description");
+    if (!jobDescription.trim() && !companyName.trim()) {
+      setError("Please enter a company name or job description");
       return;
     }
 
@@ -109,39 +78,8 @@ const GenerateResumeForm = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-cover-letter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          jobDescription,
-          resume: resume,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error response text:', errorText);
-        
-        try {
-          const errorData = JSON.parse(errorText);
-          throw new Error(errorData.error || 'Failed to generate cover letter');
-        } catch {
-          throw new Error(`HTTP ${response.status}: ${errorText}`);
-        }
-      }
-
-      const responseText = await response.text();
-      
-      try {
-        const data = JSON.parse(responseText);
-        const parsed = JSON.parse(data.aiResponse);
-        console.log('Cover letter data', parsed);
-        setGeneratedCoverLetter(parsed.coverLetter);
-      } catch (parseError) {
-        console.error('Failed to parse JSON:', parseError);
-      }
+      const result = await generateCoverLetter({ jobDescription, resume });
+      setGeneratedCoverLetter(result.coverLetter);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate cover letter. Please try again.");
     } finally {
@@ -193,6 +131,7 @@ const GenerateResumeForm = () => {
 
   const isLoading = loadingCV || loadingCoverLetter;
   const hasGenerated = generatedResume || generatedCoverLetter;
+  const canGenerate = companyName.trim() && jobDescription.trim();
 
   return (
     <div className="container mx-auto p-8 max-w-4xl">
@@ -224,7 +163,7 @@ const GenerateResumeForm = () => {
               placeholder="Paste the job description here..."
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
-              className="min-h-[200px]"
+              className="min-h-[200px] max-h-[400px]"
             />
           </div>
           
@@ -257,7 +196,7 @@ const GenerateResumeForm = () => {
           <div className="flex flex-wrap gap-4">
             <Button 
               onClick={handleGenerateCV} 
-              disabled={isLoading}
+              disabled={isLoading || !canGenerate}
               variant="outline"
               className="px-6"
             >
@@ -266,7 +205,7 @@ const GenerateResumeForm = () => {
 
             <Button 
               onClick={handleGenerateCoverLetter} 
-              disabled={isLoading}
+              disabled={isLoading || !canGenerate}
               variant="outline"
               className="px-6"
             >
@@ -275,7 +214,7 @@ const GenerateResumeForm = () => {
             
             <Button 
               onClick={handleGenerateBoth} 
-              disabled={isLoading}
+              disabled={isLoading || !canGenerate}
               className="px-6"
             >
               {isLoading ? "Generating..." : "Generate Both"}
