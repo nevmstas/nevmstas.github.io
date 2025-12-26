@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   },
   linksContainer: {
     flexDirection: "row",
+    gap: 4,
     marginTop: 2,
   },
   linkWrapper: {
@@ -69,16 +70,16 @@ const ProjectItem = ({
             src={`${website}`}
             style={styles.link}
           >
-            website
+            avatune.dev
           </Link>
           )}
-          <Text style={styles.divider}>•</Text>
+          <Text>|</Text>
           {githubLink && (
               <Link
               src={`${githubLink}`}
               style={styles.link}
             >
-              github
+              github.com/avatune/avatune
             </Link>
           )}
         </View>

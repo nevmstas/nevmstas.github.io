@@ -6,6 +6,7 @@ import { Skills } from '../skills'
 import sharedStyles from '../styles'
 import ResumeItem from '../resume-item/ResumeItem'
 import ProjectItem from '../project-item/ProjectItem'
+import { PublicationItem } from '../publication-item'
 import { Header } from '../header'
 
 const styles = StyleSheet.create({
@@ -46,12 +47,18 @@ const getItemMarginStyle = (
   itemsCount: number,
 ) => (index + 1 === itemsCount ? undefined : style)
 
+const formatDate = (date: string) => {
+  const d = new Date(date)
+  return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+}
+
 const HarvardResume = ({
   profiles,
   skills,
   experiences,
   educations,
   projects,
+  publications,
 }: ResumeQuery) => {
   const profile = profiles[0]
   return (
@@ -68,6 +75,25 @@ const HarvardResume = ({
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Skills</Text>
             <Skills skills={skills} style={sharedStyles.itemMarginBottom} />
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Work Experience</Text>
+            {experiences
+              .map((experience, index) => (
+                <ResumeItem
+                  key={experience.id}
+                  title={experience.jobTitile || ''}
+                  dates={`${formatDate(experience.startDate)} - ${experience.endDate ? formatDate(experience.endDate) : 'Present'}`}
+                  subtitle={experience.company || ''}
+                  description={experience.description}
+                  style={getItemMarginStyle(
+                    sharedStyles.itemMarginBottom,
+                    index,
+                    experiences.length,
+                  )}
+                />
+              ))}
           </View>
 
           {projects && projects.length > 0 && (
@@ -91,25 +117,6 @@ const HarvardResume = ({
           )}
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Work Experience</Text>
-            {experiences
-              .map((experience, index) => (
-                <ResumeItem
-                  key={experience.id}
-                  title={experience.jobTitile || ''}
-                  dates={`${new Date(experience.startDate).getFullYear()} - ${experience.endDate ? new Date(experience.endDate).getFullYear() : 'Present'}`}
-                  subtitle={experience.company || ''}
-                  description={experience.description}
-                  style={getItemMarginStyle(
-                    sharedStyles.itemMarginBottom,
-                    index,
-                    experiences.length,
-                  )}
-                />
-              ))}
-          </View>
-
-          <View style={styles.section}>
             <Text style={styles.sectionTitle}>Education</Text>
             {educations
               .map((education, index) => (
@@ -127,6 +134,25 @@ const HarvardResume = ({
                 />
               ))}
           </View>
+
+          {publications && publications.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Publications</Text>
+              {publications.map((publication, index) => (
+                <PublicationItem
+                  key={publication.id}
+                  title={publication.title}
+                  link={publication.link}
+                  description={publication.description}
+                  style={getItemMarginStyle(
+                    sharedStyles.itemMarginBottom,
+                    index,
+                    publications.length,
+                  )}
+                />
+              ))}
+            </View>
+          )}
         </View>
       </Page>
     </Document>

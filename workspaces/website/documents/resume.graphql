@@ -53,4 +53,10 @@ query Resume {
       name
     }
   }
+  publications {
+    id
+    title
+    description
+    link
+  }
 }

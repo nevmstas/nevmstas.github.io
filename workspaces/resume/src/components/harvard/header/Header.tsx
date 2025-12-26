@@ -11,15 +11,23 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: 'Helvetica-Bold',
-    fontSize: 12,
+    fontSize: 14,
   },
-  contactsContainer: {
+  tagline: {
+    fontSize: 10,
+    marginTop: 4,
+    color: theme.colors.dark3,
+  },
+  infoRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 4,
+    marginTop: 2,
   },
-  contact: {
-    marginHorizontal: 8,
+  infoText: {
+    fontSize: 10,
+    color: theme.colors.dark2,
+  },
+  link: {
     fontSize: 10,
     color: theme.colors.dark2,
     textDecoration: 'none',
@@ -27,6 +35,7 @@ const styles = StyleSheet.create({
   divider: {
     fontSize: 10,
     color: theme.colors.dark2,
+    marginHorizontal: 4,
   },
 })
 
@@ -34,32 +43,34 @@ const Header = ({ name, contactEmail, linkedIn, github, website }: ResumeQuery['
   return (
     <View style={styles.header}>
       <Text style={styles.headerTitle}>{name}</Text>
-      <View style={styles.contactsContainer}>
-        <Text style={styles.contact}>{contactEmail}</Text>
-        <Text style={styles.divider}>•</Text>
-        <Link
-          src={`https://www.linkedin.com/${linkedIn}`}
-          style={styles.contact}
-        >
-          {linkedIn}
+      <Text style={styles.tagline}>
+        Senior Frontend Engineer | React, Next.js, React Native | Monorepo Architecture | Web3
+      </Text>
+      <View style={styles.infoRow}>
+        <Text style={styles.infoText}>Bishkek, Kyrgyzstan (Remote)</Text>
+        <Text style={styles.divider}>|</Text>
+        <Text style={styles.infoText}>No visa sponsorship required</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Link src={`mailto:${contactEmail}`} style={styles.link}>
+          {contactEmail}
         </Link>
-        <Text style={styles.divider}>•</Text>
-        <Link
-          src={`https://www.github.com/${github}`}
-          style={styles.contact}
-        >
-          {`github.com/${github}`}
+        <Text style={styles.divider}>|</Text>
+        <Link src={`tel:+996550046336`} style={styles.link}>
+          +996 (550) 04 63 36
         </Link>
-        <Text style={styles.divider}>•</Text>
-        <Link
-          src={`${website}`}
-          style={styles.contact}
-        >
-          website
+      </View>
+      <View style={styles.infoRow}>
+        <Link src={`https://www.linkedin.com/in/${linkedIn}`} style={styles.link}>
+          linkedin.com/in/{linkedIn}
         </Link>
-        <Text style={styles.divider}>•</Text>
-        <Link src={`tel:+996550046336`} style={styles.contact}>
-          {`+996 (550) 04 63 36`}
+        <Text style={styles.divider}>|</Text>
+        <Link src={`https://www.github.com/${github}`} style={styles.link}>
+          github.com/{github}
+        </Link>
+        <Text style={styles.divider}>|</Text>
+        <Link src={website || ''} style={styles.link}>
+          {website?.replace('https://', '').replace('http://', '')}
         </Link>
       </View>
     </View>

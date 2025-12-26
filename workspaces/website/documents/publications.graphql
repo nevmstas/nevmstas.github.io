@@ -1,0 +1,8 @@
+query Publications {
+  publications {
+    id
+    title
+    description
+    link
+  }
+}
