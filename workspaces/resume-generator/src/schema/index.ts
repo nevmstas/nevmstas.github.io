@@ -7,6 +7,7 @@ export const profileSchema = z.object({
   aboutMe: z.string().nullable().optional(),
   contactEmail: z.string().nullable().optional(),
   linkedIn: z.string().nullable().optional(),
+  website: z.string().nullable().optional(),
   github: z.string().nullable().optional(),
 });
 

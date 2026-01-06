@@ -85,7 +85,7 @@ const HarvardResume = ({
                   key={experience.id}
                   title={experience.jobTitile || ''}
                   dates={`${formatDate(experience.startDate)} - ${experience.endDate ? formatDate(experience.endDate) : 'Present'}`}
-                  subtitle={experience.company || ''}
+                  subtitle={`${experience.company}- ${experience.location}`}
                   description={experience.description}
                   style={getItemMarginStyle(
                     sharedStyles.itemMarginBottom,

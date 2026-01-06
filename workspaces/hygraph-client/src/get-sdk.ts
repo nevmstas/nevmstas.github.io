@@ -7976,9 +7976,12 @@ export enum SkillOrderByInput {
 }
 
 export enum SkillType {
+  Ai = 'ai',
+  Architecture = 'architecture',
   Backend = 'backend',
   Blockchain = 'blockchain',
   Cicd = 'cicd',
+  Cloud = 'cloud',
   Frontend = 'frontend',
   Mobile = 'mobile'
 }
@@ -8859,7 +8862,7 @@ export type ExperiencesQuery = { __typename?: 'Query', experiences: Array<{ __ty
 export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }> };
+export type ProfileQuery = { __typename?: 'Query', profiles: Array<{ __typename?: 'Profile', id: string, name?: string | null, role?: string | null, aboutMe?: string | null, contactEmail?: string | null, linkedIn?: string | null, github?: string | null, website?: string | null, avatar?: { __typename?: 'Asset', url: string } | null }> };
 
 export type ProjectQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8947,6 +8950,7 @@ export const ProfileDocument = gql`
     contactEmail
     linkedIn
     github
+    website
   }
 }
     `;

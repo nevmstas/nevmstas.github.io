@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const Header = ({ name, contactEmail, linkedIn, github, website }: ResumeQuery['profiles'][0]) => {
+const Header = ({ name, contactEmail, linkedIn, github, website, role }: ResumeQuery['profiles'][0]) => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerTitle}>{name}</Text>
       <Text style={styles.tagline}>
-        Senior Frontend Engineer | React, Next.js, React Native | Monorepo Architecture | Web3
+        {role} 
       </Text>
       <View style={styles.infoRow}>
         <Text style={styles.infoText}>Bishkek, Kyrgyzstan (Remote)</Text>
