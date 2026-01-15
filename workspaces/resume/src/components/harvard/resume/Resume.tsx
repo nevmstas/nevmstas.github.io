@@ -6,7 +6,7 @@ import { Skills } from '../skills'
 import sharedStyles from '../styles'
 import ResumeItem from '../resume-item/ResumeItem'
 import ProjectItem from '../project-item/ProjectItem'
-import { PublicationItem } from '../publication-item'
+// import { PublicationItem } from '../publication-item'
 import { Header } from '../header'
 
 const styles = StyleSheet.create({
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   section: {
-    marginBottom: 2,
+    marginTop: 3,
+    // marginBottom: 10,
   },
   sectionTitle: {
     color: theme.colors.dark3,
@@ -58,7 +59,7 @@ const HarvardResume = ({
   experiences,
   educations,
   projects,
-  publications,
+  // publications,
 }: ResumeQuery) => {
   const profile = profiles[0]
   return (
@@ -135,7 +136,7 @@ const HarvardResume = ({
               ))}
           </View>
 
-          {publications && publications.length > 0 && (
+          {/* {publications && publications.length > 0 && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Publications</Text>
               {publications.map((publication, index) => (
@@ -152,7 +153,7 @@ const HarvardResume = ({
                 />
               ))}
             </View>
-          )}
+          )} */}
         </View>
       </Page>
     </Document>

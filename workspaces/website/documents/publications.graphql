@@ -4,5 +4,8 @@ query Publications {
     title
     description
     link
+    image {
+      url
+    }
   }
 }

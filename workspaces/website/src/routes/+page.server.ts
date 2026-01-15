@@ -2,13 +2,14 @@ import { gqlClient } from '$lib/gql-client';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const [profileData, experiencesData, educationsData, projectsData, resumeData] =
+	const [profileData, experiencesData, educationsData, projectsData, resumeData, publicationsData] =
 		await Promise.all([
 			gqlClient.Profile(),
 			gqlClient.Experiences(),
 			gqlClient.Education(),
 			gqlClient.Project(),
-			gqlClient.Resume()
+			gqlClient.Resume(),
+			gqlClient.Publications()
 		]);
 
 	return {
@@ -19,7 +20,8 @@ export const load: PageServerLoad = async () => {
 		experiences: experiencesData.experiences,
 		educations: educationsData.educations,
 		projects: projectsData.projects,
-		resumeData
+		resumeData,
+		publications: publicationsData.publications
 	};
 };
 

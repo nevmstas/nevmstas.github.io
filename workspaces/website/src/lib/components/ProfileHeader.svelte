@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Linkedin, Github, FileUser, Mail } from '@lucide/svelte';
-	import type { ResumeQuery } from '@nevmstas/hygraph-client';
+	import type { ResumeQuery, PublicationsQuery } from '@nevmstas/hygraph-client';
+	import StoriesModal from './StoriesModal.svelte';
 
 	interface Props {
 		name: string;
@@ -12,9 +13,10 @@
 		github?: string | null;
 		email?: string | null;
 		resumeData?: ResumeQuery;
+		publications?: PublicationsQuery['publications'];
 	}
 
-		let {
+	let {
 		name,
 		avatarUrl,
 		yearsOfExperience,
@@ -23,8 +25,23 @@
 		linkedIn,
 		github,
 		email,
-		resumeData
+		resumeData,
+		publications = []
 	}: Props = $props();
+
+	let showStoriesModal = $state(false);
+
+	const hasPublications = $derived(publications && publications.length > 0);
+
+	function openStories() {
+		if (hasPublications) {
+			showStoriesModal = true;
+		}
+	}
+
+	function closeStories() {
+		showStoriesModal = false;
+	}
 
 	async function handleResumeClick() {
 		if (resumeData) {
@@ -38,13 +55,23 @@
 	<div class="max-w-[440px] mx-auto px-4 flex flex-col gap-3 w-full py-4">
 		<h1 class="text-3xl font-semibold m-0 text-gray-50 leading-tight">{name}</h1>
 		<div class="flex items-center gap-5">
-			<div class="w-20 h-20 shrink-0 rounded-full overflow-hidden bg-gray-900">
-				{#if avatarUrl}
-					<img src={avatarUrl} alt={name} class="w-full h-full object-cover" />
-				{:else}
-					<div class="w-full h-full bg-gray-900 flex items-center justify-center before:content-[''] before:w-2/5 before:h-2/5 before:rounded-full before:bg-gray-400 before:opacity-30"></div>
-				{/if}
-			</div>
+			<button
+				type="button"
+				onclick={openStories}
+				disabled={!hasPublications}
+				class="w-20 h-20 shrink-0 rounded-full p-[3px] bg-gray-900 transition-all duration-200 {hasPublications ? 'bg-gradient-to-tr from-orange-400 to-red-500 cursor-pointer hover:scale-105' : ''} disabled:cursor-default"
+				aria-label={hasPublications ? 'View publications' : 'No publications'}
+			>
+				<div class="w-full h-full rounded-full overflow-hidden bg-black p-[2px]">
+					<div class="w-full h-full rounded-full overflow-hidden bg-gray-900">
+						{#if avatarUrl}
+							<img src={avatarUrl} alt={name} class="w-full h-full object-cover" />
+						{:else}
+							<div class="w-full h-full bg-gray-900 flex items-center justify-center before:content-[''] before:w-2/5 before:h-2/5 before:rounded-full before:bg-gray-400 before:opacity-30"></div>
+						{/if}
+					</div>
+				</div>
+			</button>
 			<div class="flex gap-4">
 				<div class="flex flex-col gap-0.5">
 					<div class="text-base font-bold text-gray-50 leading-tight">{yearsOfExperience}</div>
@@ -126,4 +153,8 @@
 		</div>
 	</div>
 </header>
+
+{#if showStoriesModal && publications && publications.length > 0}
+	<StoriesModal {publications} onclose={closeStories} />
+{/if}
 

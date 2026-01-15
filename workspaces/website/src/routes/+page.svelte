@@ -8,7 +8,7 @@
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
-	const { profile, experiences, educations, projects, resumeData } = data;
+	const { profile, experiences, educations, projects, resumeData, publications } = data;
 
 
 </script>
@@ -24,6 +24,7 @@
 		github={profile.github}
 		email={profile.contactEmail}
 		resumeData={resumeData}
+		publications={publications}
 	/>
 
 	<main

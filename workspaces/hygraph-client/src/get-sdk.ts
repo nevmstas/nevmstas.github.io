@@ -53,6 +53,7 @@ export type Asset = Entity & Node & {
   iconProject: Array<Project>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  imagePublication: Array<Publication>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -153,6 +154,20 @@ export type AssetIconProjectArgs = {
 
 
 /** Asset system model */
+export type AssetImagePublicationArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<PublicationOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PublicationWhereInput>;
+};
+
+
+/** Asset system model */
 export type AssetLocalizationsArgs = {
   includeCurrent?: Scalars['Boolean']['input'];
   locales?: Array<Locale>;
@@ -226,6 +241,7 @@ export type AssetCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   fileName?: InputMaybe<Scalars['String']['input']>;
   iconProject?: InputMaybe<ProjectCreateManyInlineInput>;
+  imagePublication?: InputMaybe<PublicationCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -332,6 +348,9 @@ export type AssetManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imagePublication_every?: InputMaybe<PublicationWhereInput>;
+  imagePublication_none?: InputMaybe<PublicationWhereInput>;
+  imagePublication_some?: InputMaybe<PublicationWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -417,6 +436,7 @@ export type AssetUpdateInput = {
   companyLogoExperience?: InputMaybe<ExperienceUpdateManyInlineInput>;
   fileName?: InputMaybe<Scalars['String']['input']>;
   iconProject?: InputMaybe<ProjectUpdateManyInlineInput>;
+  imagePublication?: InputMaybe<PublicationUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
   /** Use this to define if its a reupload for the asset */
@@ -748,6 +768,9 @@ export type AssetWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  imagePublication_every?: InputMaybe<PublicationWhereInput>;
+  imagePublication_none?: InputMaybe<PublicationWhereInput>;
+  imagePublication_some?: InputMaybe<PublicationWhereInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   mimeType_contains?: InputMaybe<Scalars['String']['input']>;
@@ -5606,6 +5629,7 @@ export type Publication = Entity & Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  image?: Maybe<Asset>;
   link: Scalars['String']['output'];
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -5639,6 +5663,13 @@ export type PublicationHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type PublicationImageArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  where?: InputMaybe<AssetSingleRelationWhereInput>;
 };
 
 
@@ -5685,6 +5716,7 @@ export type PublicationConnection = {
 export type PublicationCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<AssetCreateOneInlineInput>;
   link: Scalars['String']['input'];
   title: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -5780,6 +5812,7 @@ export type PublicationManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<AssetWhereInput>;
   link?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   link_contains?: InputMaybe<Scalars['String']['input']>;
@@ -5874,6 +5907,7 @@ export enum PublicationOrderByInput {
 
 export type PublicationUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<AssetUpdateOneInlineInput>;
   link?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -6016,6 +6050,7 @@ export type PublicationWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<AssetWhereInput>;
   link?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   link_contains?: InputMaybe<Scalars['String']['input']>;
@@ -8872,7 +8907,7 @@ export type ProjectQuery = { __typename?: 'Query', projects: Array<{ __typename?
 export type PublicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PublicationsQuery = { __typename?: 'Query', publications: Array<{ __typename?: 'Publication', id: string, title: string, description?: string | null, link: string }> };
+export type PublicationsQuery = { __typename?: 'Query', publications: Array<{ __typename?: 'Publication', id: string, title: string, description?: string | null, link: string, image?: { __typename?: 'Asset', url: string } | null }> };
 
 export type ResumeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8978,6 +9013,9 @@ export const PublicationsDocument = gql`
     title
     description
     link
+    image {
+      url
+    }
   }
 }
     `;

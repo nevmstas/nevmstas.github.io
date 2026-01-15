@@ -4,7 +4,7 @@ import type { Style } from "@react-pdf/types";
 
 const styles = StyleSheet.create({
   resumeItem: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   subtitleContainer: {
     flexDirection: "row",
