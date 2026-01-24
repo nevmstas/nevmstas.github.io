@@ -55,12 +55,16 @@
 		transition:scale={{ duration: 200, start: 0.95 }}
 	>
 		{#if currentPublication.image?.url}
-			<img
-				src={currentPublication.image.url}
-				alt={currentPublication.title}
-				class="absolute inset-0 w-full h-full object-contain"
-			/>
-			<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+			{#key currentPublication.image.url}
+				<img
+					src={currentPublication.image.url}
+					alt={currentPublication.title}
+					class="absolute inset-0 w-full h-full object-contain"
+					loading="eager"
+					fetchpriority="high"
+				/>
+			{/key}
+			<div class="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80"></div>
 		{/if}
 
 		<div class="absolute top-4 left-4 right-4 flex gap-1 z-10">
