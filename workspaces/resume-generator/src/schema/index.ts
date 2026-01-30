@@ -1,3 +1,4 @@
+import { SkillType } from "@nevmstas/hygraph-client";
 import { z } from "zod";
 
 export const profileSchema = z.object({

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
-import { ResumeQuery } from "@nevmstas/hygraph-client";
+import { ResumeQuery, SkillType } from "@nevmstas/hygraph-client";
 import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableSkillItem } from './sortable-skill-item';
@@ -18,7 +18,7 @@ export const SkillsForm = ({ form }: SkillsFormProps) => {
   });
 
   const addSkill = () => {
-    append({ name: "" });
+    append({ name: "", type: SkillType.Frontend });
   };
 
   const removeSkill = (idx: number) => {
@@ -39,6 +39,10 @@ export const SkillsForm = ({ form }: SkillsFormProps) => {
   const handleInputChange = (value: string, idx: number) => {
     form.setValue(`skills.${idx}.name`, value, {shouldDirty: true, shouldTouch: true});
   }
+
+  const handleTypeChange = (value: SkillType, idx: number) => {
+    form.setValue(`skills.${idx}.type`, value, {shouldDirty: true, shouldTouch: true});
+  }
   return (
     <section className="space-y-4">
       <h2 className="text-xl font-bold">Skills</h2>
@@ -53,7 +57,9 @@ export const SkillsForm = ({ form }: SkillsFormProps) => {
                 key={skill.id}
                 id={idx.toString()}
                 value={form.getValues(`skills.${idx}.name`)}
+                type={form.getValues(`skills.${idx}.type`)}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e.target.value, idx)}
+                onTypeChange={(value: SkillType) => handleTypeChange(value, idx)}
                 onRemove={() => removeSkill(idx)}
               />
             ))}

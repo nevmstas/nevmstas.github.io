@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     color: theme.colors.dark3,
     fontSize: 10,
+    lineHeight: 1.18,
   },
   container: {
     padding: 24,

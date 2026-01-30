@@ -2,15 +2,19 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SkillType } from '@nevmstas/hygraph-client';
 
 interface SortableSkillItemProps {
   id: string;
   value: string;
+  type: SkillType;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTypeChange: (value: SkillType) => void;
   onRemove: () => void;
 }
 
-export function SortableSkillItem({ id, value, onChange, onRemove }: SortableSkillItemProps) {
+export function SortableSkillItem({ id, value, type, onChange, onTypeChange, onRemove }: SortableSkillItemProps) {
   const {
     attributes,
     listeners,
@@ -47,6 +51,18 @@ export function SortableSkillItem({ id, value, onChange, onRemove }: SortableSki
         placeholder="Skill"
         className="bg-black text-white border-white focus-visible:border-white focus-visible:ring-white/50"
       />
+      <Select value={type} onValueChange={(val) => onTypeChange(val as SkillType)}>
+        <SelectTrigger className="bg-black text-white border-white w-40">
+          <SelectValue placeholder="Type" />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.values(SkillType).map((skillType) => (
+            <SelectItem key={skillType} value={skillType}>
+              {skillType}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       <Button type="button" variant="destructive" onClick={onRemove}>
         Remove
       </Button>

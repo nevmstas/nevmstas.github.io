@@ -12,8 +12,9 @@ query Resume {
     github
     website
   }
-  skills(first: 100, orderBy: order_ASC, where: { showOnCv: true }) {
+  skills(first: 200, orderBy: order_ASC, where: { showOnCv: true }) {
     name
+    type
   }
   experiences(orderBy: startDate_DESC) {
     id
