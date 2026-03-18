@@ -14,19 +14,22 @@ interface Props {
 
 const typeLabels: Partial<Record<SkillType, string>> = {
   [SkillType.Frontend]: 'Frontend & Mobile',
-  [SkillType.Backend]: 'Data & APIs',
-  [SkillType.Cicd]: 'Infra & Delivery',
-  [SkillType.Ai]: 'AI & Automation',
-  [SkillType.Architecture]: 'Architecture',
+  [SkillType.Backend]: 'Backend',
+  [SkillType.Cicd]: 'DevOps & Cloud',
+  [SkillType.Ai]: 'AI & Machine Learning',
+  [SkillType.Architecture]: 'System Design & Architecture',
 }
+
+const normalizeType = (type: SkillType): SkillType =>
+  type === SkillType.Cloud ? SkillType.Cicd : type
 
 const groupByType = (skills: Skill[]): Record<string, string[]> =>
   skills
-    .filter((skill) => skill.type in typeLabels)
-    .reduce<Record<string, string[]>>((acc, skill) => ({
-      ...acc,
-      [skill.type]: [...(acc[skill.type] ?? []), skill.name],
-    }), {})
+    .filter((skill) => skill.type in typeLabels || skill.type === SkillType.Cloud)
+    .reduce<Record<string, string[]>>((acc, skill) => {
+      const key = normalizeType(skill.type)
+      return { ...acc, [key]: [...(acc[key] ?? []), skill.name] }
+    }, {})
 
 const Skills = ({ skills, style = {} }: Props) => {
   const grouped = groupByType(skills)

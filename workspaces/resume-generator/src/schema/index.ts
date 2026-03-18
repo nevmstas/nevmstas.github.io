@@ -14,6 +14,7 @@ export const profileSchema = z.object({
 
 const skillSchema = z.object({
   name: z.string(),
+  type: z.nativeEnum(SkillType)
 });
 
 const companyImageSchema = z.object({

@@ -220,8 +220,8 @@ const GenerateResumeForm = () => {
               {isLoading ? "Generating..." : "Generate Both"}
             </Button>
             
-            {hasGenerated && (
-              <Button 
+            {hasGenerated && !isLoading && (
+              <Button
                 onClick={handleNext}
                 className="px-6"
                 variant="default"
