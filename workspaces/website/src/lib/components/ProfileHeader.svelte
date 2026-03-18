@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Linkedin, Github, FileUser, Mail } from '@lucide/svelte';
+	import { Linkedin, FileUser, Mail } from '@lucide/svelte';
+	import GithubIcon from './icons/GithubIcon.svelte';
 	import type { ResumeQuery, PublicationsQuery } from '@nevmstas/hygraph-client';
 	import StoriesModal from './StoriesModal.svelte';
 
@@ -65,7 +66,7 @@
 				<div class="w-full h-full rounded-full overflow-hidden bg-black p-[2px]">
 					<div class="w-full h-full rounded-full overflow-hidden bg-gray-900">
 						{#if avatarUrl}
-							<img src={avatarUrl} alt={name} class="w-full h-full object-cover" />
+							<img src={avatarUrl} alt={name} class="w-full h-full object-cover" fetchpriority="high" />
 						{:else}
 							<div class="w-full h-full bg-gray-900 flex items-center justify-center before:content-[''] before:w-2/5 before:h-2/5 before:rounded-full before:bg-gray-400 before:opacity-30"></div>
 						{/if}
@@ -98,7 +99,7 @@
 				class="relative flex items-center justify-center text-gray-400 transition-colors duration-200 no-underline hover:text-gray-50 focus-visible:outline focus-visible:outline-gray-50 focus-visible:outline-offset-2 focus-visible:rounded group"
 				aria-label="GitHub"
 			>
-				<Github size={20} />
+				<GithubIcon size={20} />
 				<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20">
 					GitHub
 				</span>
@@ -146,7 +147,7 @@
 				aria-label="Open CV"
 			>
 				<FileUser size={20} />
-				<span class="text-sm">Open cv</span>
+				<span class="text-sm">Open CV</span>
 			</div>
 			{/if}
 

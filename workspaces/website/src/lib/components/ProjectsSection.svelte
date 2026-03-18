@@ -31,6 +31,7 @@
 							src={project.icon.url}
 							alt={project.name || 'Project icon'}
 							class="w-10 h-10 rounded-full object-cover shrink-0 border-2 border-gray-400"
+							loading="lazy"
 						/>
 					{/if}
 					<h2 class="text-xl font-semibold text-gray-50 leading-snug">{project.name}</h2>

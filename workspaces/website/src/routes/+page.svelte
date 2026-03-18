@@ -10,8 +10,17 @@
 	let { data }: { data: PageData } = $props();
 	const { profile, experiences, educations, projects, resumeData, publications } = data;
 
-
+	const avatarUrl = profile.avatar?.url;
 </script>
+
+<svelte:head>
+	{#if avatarUrl}
+		<link rel="preload" href={avatarUrl} as="image" />
+	{/if}
+	{#if publications[0]?.image?.url}
+		<link rel="preload" href={publications[0].image.url} as="image" />
+	{/if}
+</svelte:head>
 
 <div class="relative w-full h-dvh overflow-hidden flex flex-col">
 	<ProfileHeader

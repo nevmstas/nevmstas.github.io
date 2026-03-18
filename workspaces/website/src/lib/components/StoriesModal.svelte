@@ -33,9 +33,15 @@
 	}
 
 	const currentPublication = $derived(publications[currentIndex]);
+	const nextImageUrl = $derived(publications[currentIndex + 1]?.image?.url);
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
+<svelte:head>
+	{#if nextImageUrl}
+		<link rel="preload" href={nextImageUrl} as="image" />
+	{/if}
+</svelte:head>
 
 <div
 	class="fixed inset-0 z-50 bg-black/90 flex justify-center"
