@@ -19,7 +19,7 @@ export const promptCoverLetter = async (
   })
 
   const completion = await openaiClient.chat.completions.parse({
-    model: "gpt-4o",
+    model: "gpt-4.1",
     messages: [
       { role: "system", content: systemPrompt },
       {

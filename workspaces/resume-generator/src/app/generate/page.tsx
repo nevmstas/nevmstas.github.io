@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResumeQuery } from "@nevmstas/hygraph-client";
 import { resumeDB } from "@/db/resume-db";
-import { fetchResume, generateCV, generateCoverLetter } from "@/services";
+import { fetchResume, generateCV, generateCoverLetter, generateDM } from "@/services";
 
 const GenerateResumeForm = () => {
   const router = useRouter();
@@ -16,9 +16,11 @@ const GenerateResumeForm = () => {
   const [companyName, setCompanyName] = useState("");
   const [loadingCV, setLoadingCV] = useState(false);
   const [loadingCoverLetter, setLoadingCoverLetter] = useState(false);
+  const [loadingDM, setLoadingDM] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [generatedResume, setGeneratedResume] = useState<ResumeQuery | null>(null);
   const [generatedCoverLetter, setGeneratedCoverLetter] = useState<string | null>(null);
+  const [generatedDmMessage, setGeneratedDmMessage] = useState<string | null>(null);
   const [resume, setResume] = useState<ResumeQuery | null>(null);
   const [resumeLoading, setResumeLoading] = useState(true);
 
@@ -87,19 +89,44 @@ const GenerateResumeForm = () => {
     }
   };
 
+  const handleGenerateDM = async () => {
+    if (!jobDescription.trim() && !companyName.trim()) {
+      setError("Please enter a company name or job description");
+      return;
+    }
+
+    if (!resume) {
+      setError("Resume data not loaded");
+      return;
+    }
+
+    setLoadingDM(true);
+    setError(null);
+
+    try {
+      const result = await generateDM({ jobDescription, resume });
+      setGeneratedDmMessage(result.dmMessage);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to generate DM message. Please try again.");
+    } finally {
+      setLoadingDM(false);
+    }
+  };
+
   const handleGenerateBoth = async () => {
     await Promise.all([handleGenerateCV(), handleGenerateCoverLetter()]);
   };
 
   const handleNext = async () => {
-    if (generatedResume || generatedCoverLetter) {
-      await resumeDB.generatedResumes.put({ 
-        id: 'latest', 
-        data: { 
-          resume: generatedResume || resume!, 
+    if (generatedResume || generatedCoverLetter || generatedDmMessage) {
+      await resumeDB.generatedResumes.put({
+        id: 'latest',
+        data: {
+          resume: generatedResume || resume!,
           coverLetter: generatedCoverLetter || '',
+          dmMessage: generatedDmMessage || undefined,
           companyName: companyName.trim() || undefined
-        } 
+        }
       });
       router.push('/');
     }
@@ -129,8 +156,8 @@ const GenerateResumeForm = () => {
     );
   }
 
-  const isLoading = loadingCV || loadingCoverLetter;
-  const hasGenerated = generatedResume || generatedCoverLetter;
+  const isLoading = loadingCV || loadingCoverLetter || loadingDM;
+  const hasGenerated = generatedResume || generatedCoverLetter || generatedDmMessage;
   const canGenerate = companyName.trim() && jobDescription.trim();
 
   return (
@@ -172,7 +199,7 @@ const GenerateResumeForm = () => {
           )}
 
           {/* Generation status indicators */}
-          {(generatedResume || generatedCoverLetter) && (
+          {hasGenerated && (
             <div className="flex gap-4 flex-wrap">
               {generatedResume && (
                 <div className="text-green-600 text-sm flex items-center gap-1">
@@ -190,6 +217,14 @@ const GenerateResumeForm = () => {
                   Cover Letter Generated
                 </div>
               )}
+              {generatedDmMessage && (
+                <div className="text-green-600 text-sm flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  DM Message Generated
+                </div>
+              )}
             </div>
           )}
           
@@ -203,17 +238,26 @@ const GenerateResumeForm = () => {
               {loadingCV ? "Generating CV..." : "Generate CV Only"}
             </Button>
 
-            <Button 
-              onClick={handleGenerateCoverLetter} 
+            <Button
+              onClick={handleGenerateCoverLetter}
               disabled={isLoading || !canGenerate}
               variant="outline"
               className="px-6"
             >
               {loadingCoverLetter ? "Generating..." : "Generate Cover Letter Only"}
             </Button>
-            
-            <Button 
-              onClick={handleGenerateBoth} 
+
+            <Button
+              onClick={handleGenerateDM}
+              disabled={isLoading || !canGenerate}
+              variant="outline"
+              className="px-6"
+            >
+              {loadingDM ? "Generating..." : "Generate DM Only"}
+            </Button>
+
+            <Button
+              onClick={handleGenerateBoth}
               disabled={isLoading || !canGenerate}
               className="px-6"
             >

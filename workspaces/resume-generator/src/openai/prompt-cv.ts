@@ -19,7 +19,7 @@ export const promptCV = async (
   })
 
   const completion = await openaiClient.chat.completions.parse({
-    model: "gpt-4o",
+    model: "gpt-4.1",
     messages: [
       { role: "system", content: systemPrompt },
       {
@@ -38,7 +38,7 @@ SKILLS:
 - NEVER remove existing skills — only add new ones relevant to the job description
 
 EXPERIENCES:
-- For the 2 most recent roles: update jobTitle to align with target role, add 1-2 bullet points matching job requirements with metrics
+- For the 2 most recent roles: update jobTitle to align with target role, add 1-2 bullet points matching job requirements with metrics — each new bullet point must be a single line (no line breaks)
 - Keep ALL existing bullet points, only ADD new ones
 - Keep older experiences unchanged
 - Never remove any experience

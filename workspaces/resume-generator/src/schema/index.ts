@@ -84,3 +84,8 @@ export const resumeOnlySchema = z.object({
 export const coverLetterOnlySchema = z.object({
   coverLetter: z.string(),
 });
+
+// Schema for DM message generation
+export const dmMessageOnlySchema = z.object({
+  dmMessage: z.string(),
+});

@@ -13,6 +13,7 @@ import { fetchResume } from "@/services";
 export default function Home() {
   const [resume, setResume] = useState<ResumeQuery | null>(null);
   const [coverLetter, setCoverLetter] = useState<string>('')
+  const [dmMessage, setDmMessage] = useState<string>('')
   const [companyName, setCompanyName] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -38,6 +39,7 @@ export default function Home() {
       if (resume) {
         setResume(resume.data.resume);
         setCoverLetter(resume.data.coverLetter);
+        setDmMessage(resume.data.dmMessage || '');
         setCompanyName(resume.data.companyName);
       } else {
         const apiResume = await client.Resume();
@@ -70,7 +72,7 @@ export default function Home() {
         </Button>
       </div>
 
-        <CoverLetterForm value={coverLetter} onChange={setCoverLetter} />
+        <CoverLetterForm value={coverLetter} onChange={setCoverLetter} dmMessage={dmMessage} onDmMessageChange={setDmMessage} />
         <ResumeForm resume={resume} companyName={companyName} /></>}
     </div>
   );
